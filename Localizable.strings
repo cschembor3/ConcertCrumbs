@@ -6,8 +6,9 @@
   
 */
 
-"loginHeaderText" = "Concert Tracker";
+"loginHeaderText" = "Concert Crumbs";
 "usernameText" = "User name";
 "passwordText" = "Password";
 "submitText" = "Submit";
 "artistsHeaderText" = "Artists";
+"

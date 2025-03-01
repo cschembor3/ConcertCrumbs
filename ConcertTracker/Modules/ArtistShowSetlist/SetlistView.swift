@@ -16,12 +16,38 @@ struct SetlistView: View {
     }
 
     var body: some View {
-        List {
-            ForEach(viewModel.songs, id: \.id) { song in
-                Text(song.name)
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 16) {
+                ForEach(viewModel.setGroups.indices, id: \.self) { index in
+                    let setGroup = viewModel.setGroups[index]
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(setGroup.title)
+                            .font(.headline)
+                            .padding(.horizontal)
+                        
+                        ForEach(setGroup.songs) { song in
+                            HStack {
+                                Text(song.name)
+                                    .padding(.horizontal)
+                                Spacer()
+                            }
+                            .padding(.vertical, 8)
+                            .background(Color(.systemBackground))
+                            .cornerRadius(8)
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    if index < viewModel.setGroups.count - 1 {
+                        Divider()
+                            .padding(.horizontal)
+                    }
+                }
             }
+            .padding(.vertical)
         }
-        .listStyle(.insetGrouped)
+        .navigationTitle("Setlist")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("I was here") {
