@@ -17,9 +17,6 @@
 		D252D863285FA45200A4B79D /* ArtistShowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D252D862285FA45200A4B79D /* ArtistShowsView.swift */; };
 		D25366A22969F40200C7ED6E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D25366A12969F40200C7ED6E /* FirebaseAuth */; };
 		D25366A42969F45500C7ED6E /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25366A32969F45500C7ED6E /* AuthenticationService.swift */; };
-		D25366A62974C5C100C7ED6E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D25366A52974C5C000C7ED6E /* GoogleService-Info.plist */; };
-		D25366A72974C5C100C7ED6E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D25366A52974C5C000C7ED6E /* GoogleService-Info.plist */; };
-		D25366A82974C5C100C7ED6E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D25366A52974C5C000C7ED6E /* GoogleService-Info.plist */; };
 		D262451C2A1D6012007E46AE /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = D262451B2A1D6012007E46AE /* AsyncAlgorithms */; };
 		D2796A092842742E007016CE /* ConcertTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A082842742E007016CE /* ConcertTrackerApp.swift */; };
 		D2796A0B2842742E007016CE /* InitUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A0A2842742E007016CE /* InitUsernameView.swift */; };
@@ -29,6 +26,9 @@
 		D2796A2428427432007016CE /* ConcertTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A2328427432007016CE /* ConcertTrackerUITests.swift */; };
 		D2796A2628427432007016CE /* ConcertTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A2528427432007016CE /* ConcertTrackerUITestsLaunchTests.swift */; };
 		D2796A3428427527007016CE /* SetlistApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A3328427527007016CE /* SetlistApi.swift */; };
+		D2AB26B42F99959C00D78D9E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D2AB26B32F99959C00D78D9E /* GoogleService-Info.plist */; };
+		D2AB26B52F99959C00D78D9E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D2AB26B32F99959C00D78D9E /* GoogleService-Info.plist */; };
+		D2AB26B62F99959C00D78D9E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D2AB26B32F99959C00D78D9E /* GoogleService-Info.plist */; };
 		D2B3257C2995D3E4002DBCCB /* SetlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B3257B2995D3E4002DBCCB /* SetlistViewModel.swift */; };
 		D2B3257F2999BEC2002DBCCB /* UserConcertsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B3257E2999BEC2002DBCCB /* UserConcertsService.swift */; };
 		D2B325822999C3AB002DBCCB /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = D2B325812999C3AB002DBCCB /* FirebaseDatabase */; };
@@ -71,7 +71,6 @@
 		D252D860285E835300A4B79D /* ConcertCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertCellViewModel.swift; sourceTree = "<group>"; };
 		D252D862285FA45200A4B79D /* ArtistShowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistShowsView.swift; sourceTree = "<group>"; };
 		D25366A32969F45500C7ED6E /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
-		D25366A52974C5C000C7ED6E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D2796A052842742E007016CE /* ConcertTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConcertTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2796A082842742E007016CE /* ConcertTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertTrackerApp.swift; sourceTree = "<group>"; };
 		D2796A0A2842742E007016CE /* InitUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitUsernameView.swift; sourceTree = "<group>"; };
@@ -83,6 +82,7 @@
 		D2796A2328427432007016CE /* ConcertTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertTrackerUITests.swift; sourceTree = "<group>"; };
 		D2796A2528427432007016CE /* ConcertTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D2796A3328427527007016CE /* SetlistApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetlistApi.swift; sourceTree = "<group>"; };
+		D2AB26B32F99959C00D78D9E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D2B3257B2995D3E4002DBCCB /* SetlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetlistViewModel.swift; sourceTree = "<group>"; };
 		D2B3257E2999BEC2002DBCCB /* UserConcertsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConcertsService.swift; sourceTree = "<group>"; };
 		D2B3258329A3CBBA002DBCCB /* UserShowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserShowsView.swift; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				D2F4AEDA28C534A6002A05D3 /* Localizable.strings */,
-				D25366A52974C5C000C7ED6E /* GoogleService-Info.plist */,
+				D2AB26B32F99959C00D78D9E /* GoogleService-Info.plist */,
 				D2796A072842742E007016CE /* ConcertTracker */,
 				D2796A1828427432007016CE /* ConcertTrackerTests */,
 				D2796A2228427432007016CE /* ConcertTrackerUITests */,
@@ -396,8 +396,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2AB26B52F99959C00D78D9E /* GoogleService-Info.plist in Resources */,
 				D2796A1028427431007016CE /* Preview Assets.xcassets in Resources */,
-				D25366A62974C5C100C7ED6E /* GoogleService-Info.plist in Resources */,
 				D2F4AEDB28C534A6002A05D3 /* Localizable.strings in Resources */,
 				D2796A0D28427431007016CE /* Assets.xcassets in Resources */,
 			);
@@ -407,7 +407,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D25366A72974C5C100C7ED6E /* GoogleService-Info.plist in Resources */,
+				D2AB26B42F99959C00D78D9E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,7 +415,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D25366A82974C5C100C7ED6E /* GoogleService-Info.plist in Resources */,
+				D2AB26B62F99959C00D78D9E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
