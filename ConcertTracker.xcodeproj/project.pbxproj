@@ -12,6 +12,7 @@
 		D22E1FE329947B480004E8CD /* SetlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22E1FE229947B480004E8CD /* SetlistView.swift */; };
 		D242B514297DF23100EFA061 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D242B513297DF23100EFA061 /* SplashScreen.swift */; };
 		D242B569298EC16200EFA061 /* ShowsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D242B568298EC16200EFA061 /* ShowsViewModel.swift */; };
+		D246CD492FAF7BD000B319D5 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246CD472FAF7BD000B319D5 /* AccountView.swift */; };
 		D24B45E429B54B92002DEDC8 /* UserSetlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24B45E329B54B92002DEDC8 /* UserSetlistView.swift */; };
 		D252D861285E835300A4B79D /* ConcertCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D252D860285E835300A4B79D /* ConcertCellViewModel.swift */; };
 		D252D863285FA45200A4B79D /* ArtistShowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D252D862285FA45200A4B79D /* ArtistShowsView.swift */; };
@@ -67,6 +68,7 @@
 		D22E1FE229947B480004E8CD /* SetlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetlistView.swift; sourceTree = "<group>"; };
 		D242B513297DF23100EFA061 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		D242B568298EC16200EFA061 /* ShowsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsViewModel.swift; sourceTree = "<group>"; };
+		D246CD472FAF7BD000B319D5 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		D24B45E329B54B92002DEDC8 /* UserSetlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetlistView.swift; sourceTree = "<group>"; };
 		D252D860285E835300A4B79D /* ConcertCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertCellViewModel.swift; sourceTree = "<group>"; };
 		D252D862285FA45200A4B79D /* ArtistShowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistShowsView.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 		D22E1FDF299477F60004E8CD /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D246CD482FAF7BD000B319D5 /* Account */,
 				D22E1FDE299476A70004E8CD /* ArtistSearch */,
 				D22E1FE0299478200004E8CD /* ArtistShows */,
 				D22E1FE129947B140004E8CD /* ArtistShowSetlist */,
@@ -160,6 +163,14 @@
 				D2B3257B2995D3E4002DBCCB /* SetlistViewModel.swift */,
 			);
 			path = ArtistShowSetlist;
+			sourceTree = "<group>";
+		};
+		D246CD482FAF7BD000B319D5 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				D246CD472FAF7BD000B319D5 /* AccountView.swift */,
+			);
+			path = Account;
 			sourceTree = "<group>";
 		};
 		D27969FC2842742E007016CE = {
@@ -434,6 +445,7 @@
 				D2D8D8872856A88300658B9A /* ConcertCell.swift in Sources */,
 				D2F98513284EDD2E00D56104 /* ArtistsView.swift in Sources */,
 				D252D861285E835300A4B79D /* ConcertCellViewModel.swift in Sources */,
+				D246CD492FAF7BD000B319D5 /* AccountView.swift in Sources */,
 				D20D0D3628C3D0FA00C2BD25 /* Constants.swift in Sources */,
 				D2F98515285185A000D56104 /* ArtistsViewModel.swift in Sources */,
 				D2796A3428427527007016CE /* SetlistApi.swift in Sources */,

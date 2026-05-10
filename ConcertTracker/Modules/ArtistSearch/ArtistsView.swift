@@ -91,12 +91,10 @@ struct ArtistsView<ViewModel>: View where ViewModel: ArtistsViewModelProtocol {
                 .badge(
                     concertService.newShowAttendedCount > 0 ? "\(concertService.newShowAttendedCount)" : nil
                 )
-            Button("sign out") {
-                AuthenticationService().logOut()
-            }
-            .tabItem {
-                Label("Account", systemImage: "person.crop.circle.fill")
-            }
+            AccountView()
+                .tabItem {
+                    Label("Account", systemImage: "person.crop.circle.fill")
+                }
         }
     }
 }
