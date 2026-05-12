@@ -30,7 +30,6 @@ final class UserShowsViewModel: UserShowsViewModelProtocol {
 
     @Published var entries = [ShowSeenEntry]()
 
-    private var artistsDict: [String: [UserShowDbModel]]?
     private var cancellables = [AnyCancellable]()
     private var concertService: any UserConcertsServiceProtocol = UserConcertsService.shared
 
@@ -64,10 +63,10 @@ final class UserShowsViewModel: UserShowsViewModelProtocol {
 
     private func populateInitialShowsAttended() async {
         guard let showsAttended = try? concertService.getShowsAttended() else { return }
-        self.artistsDict = await Dictionary(grouping: showsAttended, by: { $0.artistName })
+        let artistsDict = await Dictionary(grouping: showsAttended, by: { $0.artistName })
 
         var artistsSeen = [ArtistSeen]()
-        artistsDict?.forEach { (artistName, artists) in
+        artistsDict.forEach { (artistName, artists) in
             let shows = artists.map { ShowSeen(id: $0.id, venueName: $0.venueName ?? "Saint Vitus", city: "Brooklyn", date: $0.showDate) }
             artistsSeen.append(.init(id: artistName, name: artistName, shows: shows))
         }
@@ -96,8 +95,8 @@ final class UserShowsViewModel: UserShowsViewModelProtocol {
     private func listenForNewShowsAdded() {
         concertService.beginListeningForNewShowsAdded()
         concertService.newShowsAttended
-            .sink { newShow in
-                if var artistEntry = self.entries.first(where: { newShow.artistName == $0.name }) {
+            .sink { [weak self] newShow in
+                if var artistEntry = self?.entries.first(where: { newShow.artistName == $0.name }) {
                     let newShowEntry = ShowSeenEntry(
                         setlistFmShowId: newShow.id,
                         name: "Saint Vitus",
@@ -109,7 +108,7 @@ final class UserShowsViewModel: UserShowsViewModelProtocol {
 
                     artistEntry.children?.append(newShowEntry)
                 } else {
-                    self.entries.append(
+                    self?.entries.append(
                         .init(
                             setlistFmShowId: "",
                             name: newShow.artistName,
@@ -135,32 +134,21 @@ final class UserShowsViewModel: UserShowsViewModelProtocol {
 
     private func getSortedEntries(sortOption: SortOption) -> [ShowSeenEntry] {
         switch sortOption {
-        case .dateAscending:
-            return entries.sorted { artist1, artist2 in
-                self.getMostRecentDate(from: artist1.children ?? []) ?? Date.distantPast <
-                    self.getMostRecentDate(from: artist2.children ?? []) ?? Date.distantPast
+        case .alphabetically:
+            entries.sorted { artist1, artist2 in
+                artist1.name.lowercased() < artist2.name.lowercased()
             }
         case .dateDescending:
-            return entries.sorted { artist1, artist2 in
+            entries.sorted { artist1, artist2 in
                 self.getMostRecentDate(from: artist1.children ?? []) ?? Date.distantPast <
                     self.getMostRecentDate(from: artist2.children ?? []) ?? Date.distantPast
             }.reversed()
-        case .alphabetically:
-            return entries.sorted { artist1, artist2 in
-                artist1.name.lowercased() < artist2.name.lowercased()
-            }
-        case .amountSeen:
-            return entries.sorted { artist1, artist2 in
-                artist1.children?.count ?? 0 > artist2.children?.count ?? 0
-            }
         }
     }
 
     enum SortOption {
-        case dateAscending
-        case dateDescending
         case alphabetically
-        case amountSeen
+        case dateDescending
     }
 
     private func getMostRecentDate(from shows: [ShowSeenEntry]) -> Date? {

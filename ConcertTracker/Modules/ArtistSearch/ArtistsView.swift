@@ -11,9 +11,8 @@ struct ArtistsView<ViewModel>: View where ViewModel: ArtistsViewModelProtocol {
 
     @State private var path = NavigationPath()
 
-    @State private var intitialLoading: Bool = false
+    @State private var initialLoading: Bool = false
     @State private var loadingMore: Bool = false
-    @State private var searchText: String = ""
 
     @ObservedObject private var concertService = UserConcertsService.shared
 
@@ -29,52 +28,39 @@ struct ArtistsView<ViewModel>: View where ViewModel: ArtistsViewModelProtocol {
                 ZStack {
                     ProgressView()
                         .progressViewStyle(.circular)
-                        .opacity(self.intitialLoading ? 1 : 0)
+                        .opacity(self.initialLoading ? 1 : 0)
 
-                    VStack {
-                        List(viewModel.artists, id: \.id) { artist in
-                            NavigationLink(
-                                value: ArtistData(id: artist.id.uuidString, name: artist.name)
-                            ) {
-                                Text(artist.name)
-                            }
-                            .onAppear {
-                                if viewModel.needsToFetchMore(artist: artist) {
-                                    self.loadingMore = true
-                                    Task {
-                                        _ = await self.viewModel.fetchMore()
-                                        self.loadingMore = false
-                                    }
+                    List(viewModel.artists, id: \.id) { artist in
+                        NavigationLink(
+                            value: ArtistData(id: artist.id.uuidString, name: artist.name)
+                        ) {
+                            Text(artist.name)
+                        }
+                        .onAppear {
+                            if viewModel.needsToFetchMore(artist: artist) {
+                                self.loadingMore = true
+                                Task {
+                                    _ = await self.viewModel.fetchMore()
+                                    self.loadingMore = false
                                 }
                             }
-                            if self.intitialLoading {
-                                ProgressView()
-                                    .progressViewStyle(.circular)
-                                    .opacity(self.loadingMore ? 1 : 0)
-                            }
                         }
-                        .navigationDestination(for: ArtistData.self) { artist in
-                            ArtistShowsView(
-                                viewModel: ArtistShowsViewModel(
-                                    artist: (
-                                        id: artist.id.lowercased(),
-                                        name: artist.name
-                                    )
+                    }
+                    .navigationDestination(for: ArtistData.self) { artist in
+                        ArtistShowsView(
+                            viewModel: ArtistShowsViewModel(
+                                artist: (
+                                    id: artist.id.lowercased(),
+                                    name: artist.name
                                 )
                             )
-                        }
-                        .searchable(text: self.$viewModel.searchText)
+                        )
+                    }
+                    .searchable(text: self.$viewModel.searchText)
 
-                        if self.viewModel.searchText.isEmpty {
-                            SearchIconView()
-                                .padding(.init(top: 0, leading: 80, bottom: 80, trailing: 80))
-                                .layoutPriority(1)
-                        }
-
-                        Spacer()
-                        Spacer()
-                        Spacer()
-                        Spacer()
+                    if self.viewModel.searchText.isEmpty {
+                        SearchIconView()
+                            .padding(.horizontal, 80)
                     }
                 }
                 .navigationTitle(Constants.Artists.headerText)

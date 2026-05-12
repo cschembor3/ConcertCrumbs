@@ -14,7 +14,6 @@
 		D242B569298EC16200EFA061 /* ShowsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D242B568298EC16200EFA061 /* ShowsViewModel.swift */; };
 		D246CD492FAF7BD000B319D5 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246CD472FAF7BD000B319D5 /* AccountView.swift */; };
 		D24B45E429B54B92002DEDC8 /* UserSetlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24B45E329B54B92002DEDC8 /* UserSetlistView.swift */; };
-		D252D861285E835300A4B79D /* ConcertCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D252D860285E835300A4B79D /* ConcertCellViewModel.swift */; };
 		D252D863285FA45200A4B79D /* ArtistShowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D252D862285FA45200A4B79D /* ArtistShowsView.swift */; };
 		D25366A22969F40200C7ED6E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D25366A12969F40200C7ED6E /* FirebaseAuth */; };
 		D25366A42969F45500C7ED6E /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25366A32969F45500C7ED6E /* AuthenticationService.swift */; };
@@ -36,7 +35,6 @@
 		D2B3258429A3CBBA002DBCCB /* UserShowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B3258329A3CBBA002DBCCB /* UserShowsView.swift */; };
 		D2B3258729A3CC6C002DBCCB /* UserShowsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B3258629A3CC6C002DBCCB /* UserShowsViewModel.swift */; };
 		D2BDEFE2285513B9003FC4A2 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BDEFE1285513B9003FC4A2 /* Secrets.swift */; };
-		D2D8D8872856A88300658B9A /* ConcertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D8D8862856A88300658B9A /* ConcertCell.swift */; };
 		D2F4AEDB28C534A6002A05D3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2F4AEDA28C534A6002A05D3 /* Localizable.strings */; };
 		D2F98513284EDD2E00D56104 /* ArtistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F98512284EDD2E00D56104 /* ArtistsView.swift */; };
 		D2F98515285185A000D56104 /* ArtistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F98514285185A000D56104 /* ArtistsViewModel.swift */; };
@@ -70,7 +68,6 @@
 		D242B568298EC16200EFA061 /* ShowsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsViewModel.swift; sourceTree = "<group>"; };
 		D246CD472FAF7BD000B319D5 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		D24B45E329B54B92002DEDC8 /* UserSetlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetlistView.swift; sourceTree = "<group>"; };
-		D252D860285E835300A4B79D /* ConcertCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertCellViewModel.swift; sourceTree = "<group>"; };
 		D252D862285FA45200A4B79D /* ArtistShowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistShowsView.swift; sourceTree = "<group>"; };
 		D25366A32969F45500C7ED6E /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		D2796A052842742E007016CE /* ConcertTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConcertTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,7 +87,6 @@
 		D2B3258329A3CBBA002DBCCB /* UserShowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserShowsView.swift; sourceTree = "<group>"; };
 		D2B3258629A3CC6C002DBCCB /* UserShowsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserShowsViewModel.swift; sourceTree = "<group>"; };
 		D2BDEFE1285513B9003FC4A2 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
-		D2D8D8862856A88300658B9A /* ConcertCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertCell.swift; sourceTree = "<group>"; };
 		D2F4AEDA28C534A6002A05D3 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		D2F98512284EDD2E00D56104 /* ArtistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsView.swift; sourceTree = "<group>"; };
 		D2F98514285185A000D56104 /* ArtistsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsViewModel.swift; sourceTree = "<group>"; };
@@ -279,8 +275,6 @@
 				D2FFCA0629C7879900FBF80D /* Setlist */,
 				D2B3258329A3CBBA002DBCCB /* UserShowsView.swift */,
 				D2B3258629A3CC6C002DBCCB /* UserShowsViewModel.swift */,
-				D2D8D8862856A88300658B9A /* ConcertCell.swift */,
-				D252D860285E835300A4B79D /* ConcertCellViewModel.swift */,
 			);
 			path = UserShows;
 			sourceTree = "<group>";
@@ -442,9 +436,7 @@
 				D20D0D2D28C3B12F00C2BD25 /* UserDefaultsService.swift in Sources */,
 				D2BDEFE2285513B9003FC4A2 /* Secrets.swift in Sources */,
 				D2796A0B2842742E007016CE /* InitUsernameView.swift in Sources */,
-				D2D8D8872856A88300658B9A /* ConcertCell.swift in Sources */,
 				D2F98513284EDD2E00D56104 /* ArtistsView.swift in Sources */,
-				D252D861285E835300A4B79D /* ConcertCellViewModel.swift in Sources */,
 				D246CD492FAF7BD000B319D5 /* AccountView.swift in Sources */,
 				D20D0D3628C3D0FA00C2BD25 /* Constants.swift in Sources */,
 				D2F98515285185A000D56104 /* ArtistsViewModel.swift in Sources */,

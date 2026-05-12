@@ -13,7 +13,6 @@ struct ArtistShowsView: View {
 
     @State private var isLoading: Bool = false
     @State private var loadingMore: Bool = false
-    @State private var sets = [ShowDisplayInfo]()
     @StateObject private var viewModel: ArtistShowsViewModel
 
     init(viewModel: ArtistShowsViewModel) {

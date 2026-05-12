@@ -18,8 +18,8 @@ import Foundation
 
 final class ArtistsViewModel: ArtistsViewModelProtocol {
 
-    private let setlistApi = SetlistApi()
-    
+    private let setlistService: SetlistServiceInterface
+
     @Published private(set) var artists: [ArtistSearch] = []
     @Published var searchText: String = ""
 
@@ -27,13 +27,14 @@ final class ArtistsViewModel: ArtistsViewModelProtocol {
     private var searchQuery: String = ""
     private var cancellables = Set<AnyCancellable>()
 
-    init() {
+    init(setlistService: SetlistServiceInterface = SetlistService()) {
+        self.setlistService = setlistService
         $searchText
             .debounce(for: .milliseconds(200), scheduler: RunLoop.main)
             .removeDuplicates()
-            .sink { query in
-                self.searchQuery = query
-                self.fetch(searchQuery: query)
+            .sink { [weak self] query in
+                self?.searchQuery = query
+                self?.fetch(searchQuery: query)
             }
             .store(in: &self.cancellables)
     }
@@ -49,9 +50,7 @@ final class ArtistsViewModel: ArtistsViewModelProtocol {
 
         Task {
             do {
-                let response = try await SetlistService(setlistApi: self.setlistApi)
-                    .search(artistName: searchQuery, page: page)
-
+                let response = try await setlistService.search(artistName: searchQuery, page: page)
                 guard let artists = response.artist else { return }
                     self.artists = artists
                 self.page = 1
@@ -64,9 +63,7 @@ final class ArtistsViewModel: ArtistsViewModelProtocol {
     func fetchMore() async {
         do {
             self.page += 1
-            let response = try await SetlistService(setlistApi: self.setlistApi)
-                .search(artistName: self.searchQuery, page: page)
-
+            let response = try await setlistService.search(artistName: self.searchQuery, page: page)
             guard let artists = response.artist else { return }
             self.artists.append(contentsOf: artists)
         } catch {
