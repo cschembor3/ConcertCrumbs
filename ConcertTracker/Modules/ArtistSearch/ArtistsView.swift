@@ -16,12 +16,13 @@ struct ArtistsView<ViewModel>: View where ViewModel: ArtistsViewModelProtocol {
 
     @ObservedObject private var concertService = UserConcertsService.shared
 
-    @StateObject private var viewModel: ViewModel
+    @State private var viewModel: ViewModel
     init(viewModel: ViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = State(wrappedValue: viewModel)
     }
 
     var body: some View {
+        @Bindable var viewModel = viewModel
 
         TabView {
             NavigationStack(path: $path) {
@@ -56,7 +57,7 @@ struct ArtistsView<ViewModel>: View where ViewModel: ArtistsViewModelProtocol {
                             )
                         )
                     }
-                    .searchable(text: self.$viewModel.searchText)
+                    .searchable(text: $viewModel.searchText)
 
                     if self.viewModel.searchText.isEmpty {
                         SearchIconView()
@@ -104,12 +105,12 @@ struct SearchIconView: View {
     }
 }
 
-struct ArtistsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ArtistsView(viewModel: MockArtistsViewModel())
-    }
+#Preview {
+    ArtistsView(viewModel: MockArtistsViewModel())
 }
 
+@MainActor
+@Observable
 class MockArtistsViewModel: ArtistsViewModelProtocol {
     var artists: [ArtistSearch] = [
 //        .init(id: UUID(), ticketMasterId: 33333, name: "Deftones", sortName: "", disambiguation: "", url: ""),
