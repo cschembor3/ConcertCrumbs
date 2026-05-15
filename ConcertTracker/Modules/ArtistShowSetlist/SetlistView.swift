@@ -9,18 +9,16 @@ import SwiftUI
 
 struct SetlistView: View {
 
-    @ObservedObject private var viewModel: SetlistViewModel
+    @State private var viewModel: SetlistViewModel
 
     init(viewModel: SetlistViewModel) {
-        self.viewModel = viewModel
+        _viewModel = State(wrappedValue: viewModel)
     }
 
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 16) {
-                ForEach(viewModel.setGroups.indices, id: \.self) { index in
-                    let setGroup = viewModel.setGroups[index]
-                    
+                ForEach(Array(viewModel.setGroups.enumerated()), id: \.element.id) { index, setGroup in
                     VStack(alignment: .leading, spacing: 8) {
                         Text(setGroup.title)
                             .font(.headline)
@@ -58,8 +56,6 @@ struct SetlistView: View {
     }
 }
 
-struct SetlistView_Previews: PreviewProvider {
-    static var previews: some View {
-        SetlistView(viewModel: SetlistViewModel(setlist: []))
-    }
+#Preview {
+    SetlistView(viewModel: SetlistViewModel(setlist: []))
 }

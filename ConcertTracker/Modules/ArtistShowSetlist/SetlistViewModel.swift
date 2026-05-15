@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Observation
 
 struct SetGroup: Identifiable {
     let id = UUID()
@@ -14,10 +15,11 @@ struct SetGroup: Identifiable {
 }
 
 @MainActor
-final class SetlistViewModel: ObservableObject {
+@Observable
+final class SetlistViewModel {
 
-    @Published private(set) var songs: [Song] = []
-    @Published private(set) var setGroups: [SetGroup] = []
+    private(set) var songs: [Song] = []
+    private(set) var setGroups: [SetGroup] = []
 
     init(setlist: [Song]) {
         self.songs = setlist

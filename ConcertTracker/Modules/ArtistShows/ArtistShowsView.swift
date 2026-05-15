@@ -65,8 +65,6 @@ struct IdentifiableSong: Identifiable {
     }
 }
 
-struct ArtistShowsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ArtistShowsView(viewModel: ArtistShowsViewModel(artist: (id: "12345", name: "Deftones")))
-    }
+#Preview {
+    ArtistShowsView(viewModel: ArtistShowsViewModel(artist: (id: "12345", name: "Deftones")))
 }
