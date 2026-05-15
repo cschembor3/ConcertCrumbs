@@ -26,11 +26,11 @@ final class ArtistsViewModel: ArtistsViewModelProtocol {
         didSet { searchTextContinuation.yield(searchText) }
     }
 
-    @ObservationIgnored private let setlistService: SetlistServiceInterface
-    @ObservationIgnored private var page: Int = 1
-    @ObservationIgnored private var searchQuery: String = ""
-    @ObservationIgnored private var searchTask: Task<Void, Never>?
-    @ObservationIgnored private let searchTextContinuation: AsyncStream<String>.Continuation
+    private let setlistService: SetlistServiceInterface
+    private var page: Int = 1
+    private var searchQuery: String = ""
+    private var searchTask: Task<Void, Never>?
+    private let searchTextContinuation: AsyncStream<String>.Continuation
 
     init(setlistService: SetlistServiceInterface = SetlistService()) {
         self.setlistService = setlistService
@@ -50,7 +50,7 @@ final class ArtistsViewModel: ArtistsViewModelProtocol {
         }
     }
 
-    deinit {
+    isolated deinit {
         searchTextContinuation.finish()
         searchTask?.cancel()
     }

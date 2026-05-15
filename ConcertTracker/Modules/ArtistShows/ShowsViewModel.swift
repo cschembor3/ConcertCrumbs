@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import Observation
 
 @MainActor
-final class ArtistShowsViewModel: ObservableObject {
+@Observable
+final class ArtistShowsViewModel {
 
-    @Published var shows = [ShowDisplayInfo]()
+    var shows = [ShowDisplayInfo]()
     private var page: Int = 1
 
     private let artist: (id: String, name: String)

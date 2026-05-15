@@ -10,13 +10,13 @@ import SwiftUI
 struct ArtistShowsView: View {
 
     @State private var loaded: Bool = false
-
     @State private var isLoading: Bool = false
     @State private var loadingMore: Bool = false
-    @StateObject private var viewModel: ArtistShowsViewModel
+
+    @State private var viewModel: ArtistShowsViewModel
 
     init(viewModel: ArtistShowsViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = State(wrappedValue: viewModel)
     }
 
     var body: some View {
