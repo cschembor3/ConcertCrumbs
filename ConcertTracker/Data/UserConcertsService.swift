@@ -5,7 +5,6 @@
 //  Created by Connor Schembor on 2/12/23.
 //
 
-import Combine
 import FirebaseDatabase
 
 protocol UserConcertsServiceProtocol {
@@ -13,7 +12,7 @@ protocol UserConcertsServiceProtocol {
     func getShowsAttended() throws -> AsyncStream<UserShowDbModel>
     func beginListeningForNewShowsAdded()
     func removeShowAsAttended(id: String)
-    var newShowsAttended: PassthroughSubject<UserShowDbModel, Never> { get }
+    var newShowsAttended: AsyncStream<UserShowDbModel> { get }
     var showsAttended: [UserShowDbModel] { get }
     var newShowAttendedCount: Int { get set }
 }
@@ -23,7 +22,8 @@ final class UserConcertsService: UserConcertsServiceProtocol, ObservableObject {
     static let shared = UserConcertsService()
 
     private(set) var showsAttended: [UserShowDbModel] = []
-    private(set) var newShowsAttended: PassthroughSubject<UserShowDbModel, Never> = .init()
+    let newShowsAttended: AsyncStream<UserShowDbModel>
+    private let newShowsAttendedContinuation: AsyncStream<UserShowDbModel>.Continuation
     @Published var newShowAttendedCount: Int = 0
 
     private let reference = Database.database().reference()
@@ -34,6 +34,12 @@ final class UserConcertsService: UserConcertsServiceProtocol, ObservableObject {
     }()
 
     private var handle: DatabaseHandle!
+
+    private init() {
+        let (stream, continuation) = AsyncStream.makeStream(of: UserShowDbModel.self)
+        self.newShowsAttended = stream
+        self.newShowsAttendedContinuation = continuation
+    }
 
     // make init an async func
     // only observe single event here, to get initial values
@@ -86,7 +92,7 @@ final class UserConcertsService: UserConcertsServiceProtocol, ObservableObject {
                 let newShowDecoded = try JSONDecoder().decode(UserShowDbModel.self, from: data)
                 if !self.showsAttended.contains(newShowDecoded) {
                     self.showsAttended.append(newShowDecoded)
-                    self.newShowsAttended.send(newShowDecoded)
+                    self.newShowsAttendedContinuation.yield(newShowDecoded)
                     self.newShowAttendedCount += 1
                 }
             } catch {
@@ -96,6 +102,7 @@ final class UserConcertsService: UserConcertsServiceProtocol, ObservableObject {
     }
 
     deinit {
+        self.newShowsAttendedContinuation.finish()
         self.databasePath?.removeObserver(withHandle: handle)
     }
 

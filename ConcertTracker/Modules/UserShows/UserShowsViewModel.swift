@@ -6,19 +6,19 @@
 //
 
 import AsyncAlgorithms
-import Combine
 import Foundation
-import FirebaseDatabase
-import SwiftUI
+import Observation
 
 @MainActor
-protocol UserShowsViewModelProtocol: ObservableObject {
+protocol UserShowsViewModelProtocol: Observable, AnyObject {
     var entries: [ShowSeenEntry] { get }
     func resetNewShowCount()
     func remove(entryId: String, showId: String)
     func sort(_ option: UserShowsViewModel.SortOption)
 }
 
+@MainActor
+@Observable
 final class UserShowsViewModel: UserShowsViewModelProtocol {
 
     private static var dateFormatter: DateFormatter = {
@@ -27,18 +27,26 @@ final class UserShowsViewModel: UserShowsViewModelProtocol {
         return formatter
     }()
 
+    var entries = [ShowSeenEntry]()
 
-    @Published var entries = [ShowSeenEntry]()
-
-    private var cancellables = [AnyCancellable]()
-    private var concertService: any UserConcertsServiceProtocol = UserConcertsService.shared
+    private var concertService: any UserConcertsServiceProtocol
+    private var listenerTask: Task<Void, Never>?
 
     init(concertService: any UserConcertsServiceProtocol = UserConcertsService.shared) {
         self.concertService = concertService
-        Task {
-            await self.populateInitialShowsAttended()
-            self.listenForNewShowsAdded()
+        self.listenerTask = Task { [weak self] in
+            await self?.populateInitialShowsAttended()
+            self?.concertService.beginListeningForNewShowsAdded()
+            guard let stream = self?.concertService.newShowsAttended else { return }
+            for await newShow in stream {
+                guard let self else { return }
+                self.handle(newShow: newShow)
+            }
         }
+    }
+
+    isolated deinit {
+        listenerTask?.cancel()
     }
 
     func resetNewShowCount() {
@@ -92,44 +100,30 @@ final class UserShowsViewModel: UserShowsViewModelProtocol {
         }
     }
 
-    private func listenForNewShowsAdded() {
-        concertService.beginListeningForNewShowsAdded()
-        concertService.newShowsAttended
-            .sink { [weak self] newShow in
-                if var artistEntry = self?.entries.first(where: { newShow.artistName == $0.name }) {
-                    let newShowEntry = ShowSeenEntry(
-                        setlistFmShowId: newShow.id,
-                        name: "Saint Vitus",
-                        text: newShow.showDate,
-                        type: .show,
-                        children: nil,
-                        date: Self.dateFormatter.date(from: newShow.showDate)
-                    )
+    private func handle(newShow: UserShowDbModel) {
+        let newShowEntry = ShowSeenEntry(
+            setlistFmShowId: newShow.id,
+            name: newShow.venueName ?? "",
+            text: newShow.showDate,
+            type: .show,
+            children: nil,
+            date: Self.dateFormatter.date(from: newShow.showDate)
+        )
 
-                    artistEntry.children?.append(newShowEntry)
-                } else {
-                    self?.entries.append(
-                        .init(
-                            setlistFmShowId: "",
-                            name: newShow.artistName,
-                            text: newShow.artistName,
-                            type: .artist,
-                            children: [
-                                .init(
-                                    setlistFmShowId: newShow.id,
-                                    name: "Saint Vitus",
-                                    text: newShow.showDate,
-                                    type: .show,
-                                    children: nil,
-                                    date: Self.dateFormatter.date(from: newShow.showDate)
-                                )
-                            ],
-                            date: nil
-                        )
-                    )
-                }
-            }
-            .store(in: &cancellables)
+        if let index = self.entries.firstIndex(where: { newShow.artistName == $0.name }) {
+            self.entries[index].children?.append(newShowEntry)
+        } else {
+            self.entries.append(
+                .init(
+                    setlistFmShowId: "",
+                    name: newShow.artistName,
+                    text: newShow.artistName,
+                    type: .artist,
+                    children: [newShowEntry],
+                    date: nil
+                )
+            )
+        }
     }
 
     private func getSortedEntries(sortOption: SortOption) -> [ShowSeenEntry] {

@@ -16,10 +16,10 @@ struct UserShowsView<ViewModel>: View where ViewModel: UserShowsViewModelProtoco
 
     @State private var chosenArtist: ShowSeenEntry?
     @State private var groupingMode: GroupingMode = .alphabetical
-    @StateObject private var viewModel: ViewModel
+    @State private var viewModel: ViewModel
 
     init(viewModel: ViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+        _viewModel = State(wrappedValue: viewModel)
     }
 
     private var entriesByLetter: [(String, [ShowSeenEntry])] {
@@ -144,12 +144,12 @@ struct UserShowsView<ViewModel>: View where ViewModel: UserShowsViewModelProtoco
     }
 }
 
-struct UserShowsView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserShowsView(viewModel: MockUserShowsViewModel())
-    }
+#Preview {
+    UserShowsView(viewModel: MockUserShowsViewModel())
 }
 
+@MainActor
+@Observable
 class MockUserShowsViewModel: UserShowsViewModelProtocol {
     func remove(entryId: String, showId: String) {}
     func remove(showId: String) {}
