@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct Constants {
+enum Constants {
 
-    struct Login {
+    enum Login {
         static let headerText = NSLocalizedString("loginHeaderText", comment: "")
         static let usernameText = NSLocalizedString("usernameText", comment: "")
         static let passwordText = NSLocalizedString("passwordText", comment: "")
         static let submitButtonText = NSLocalizedString("submitText", comment: "")
     }
 
-    struct Artists {
+    enum Artists {
         static let headerText = NSLocalizedString("artistsHeaderText", comment: "")
     }
 }

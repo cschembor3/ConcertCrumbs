@@ -10,6 +10,7 @@ import SwiftUI
 struct AccountView: View {
 
     @StateObject private var authService = AuthenticationService()
+    @State private var presentSignOutAlert: Bool = false
 
     private var initials: String {
         let name = authService.user?.displayName ?? authService.user?.email ?? ""
@@ -56,6 +57,11 @@ struct AccountView: View {
 
                 Section {
                     Button("Sign out", role: .destructive) {
+                        presentSignOutAlert = true
+                    }
+                }
+                .alert("Are you sure you want to sign out?", isPresented: $presentSignOutAlert) {
+                    Button("Yes", role: .destructive) {
                         authService.logOut()
                     }
                 }
