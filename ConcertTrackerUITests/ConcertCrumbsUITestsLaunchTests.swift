@@ -7,7 +7,7 @@
 
 import XCTest
 
-class ConcertTrackerUITestsLaunchTests: XCTestCase {
+class ConcertCrumbsUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

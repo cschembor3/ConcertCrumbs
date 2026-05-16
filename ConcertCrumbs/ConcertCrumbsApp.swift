@@ -10,7 +10,7 @@ import SwiftUI
 import FirebaseCore
 
 @main
-struct ConcertTrackerApp: App {
+struct ConcertCrumbsApp: App {
 
     init() {
         FirebaseApp.configure()
