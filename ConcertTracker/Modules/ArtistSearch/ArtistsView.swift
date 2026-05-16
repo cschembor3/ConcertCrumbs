@@ -14,7 +14,7 @@ struct ArtistsView<ViewModel>: View where ViewModel: ArtistsViewModelProtocol {
     @State private var initialLoading: Bool = false
     @State private var loadingMore: Bool = false
 
-    @ObservedObject private var concertService = UserConcertsService.shared
+    private let concertService = UserConcertsService.shared
 
     @State private var viewModel: ViewModel
     init(viewModel: ViewModel) {

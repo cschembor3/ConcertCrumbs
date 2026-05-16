@@ -6,10 +6,12 @@
 //
 
 import FirebaseDatabase
+import Observation
 
+@MainActor
 protocol UserConcertsServiceProtocol {
     func getSetlist(concertId: String)
-    func getShowsAttended() throws -> AsyncStream<UserShowDbModel>
+    func loadShowsAttended() async throws -> [UserShowDbModel]
     func beginListeningForNewShowsAdded()
     func removeShowAsAttended(id: String)
     var newShowsAttended: AsyncStream<UserShowDbModel> { get }
@@ -17,23 +19,26 @@ protocol UserConcertsServiceProtocol {
     var newShowAttendedCount: Int { get set }
 }
 
-final class UserConcertsService: UserConcertsServiceProtocol, ObservableObject {
+@MainActor
+@Observable
+final class UserConcertsService: UserConcertsServiceProtocol {
 
     static let shared = UserConcertsService()
 
     private(set) var showsAttended: [UserShowDbModel] = []
-    let newShowsAttended: AsyncStream<UserShowDbModel>
+    var newShowAttendedCount: Int = 0
+
+    @ObservationIgnored let newShowsAttended: AsyncStream<UserShowDbModel>
     private let newShowsAttendedContinuation: AsyncStream<UserShowDbModel>.Continuation
-    @Published var newShowAttendedCount: Int = 0
 
     private let reference = Database.database().reference()
 
-    private lazy var databasePath: DatabaseReference? = {
+    @ObservationIgnored private lazy var databasePath: DatabaseReference? = {
         guard let userId = AuthenticationService().user?.uid else { return nil }
         return reference.ref.child("users/\(userId)/showsAttended")
     }()
 
-    private var handle: DatabaseHandle!
+    private var handle: DatabaseHandle?
 
     private init() {
         let (stream, continuation) = AsyncStream.makeStream(of: UserShowDbModel.self)
@@ -41,69 +46,51 @@ final class UserConcertsService: UserConcertsServiceProtocol, ObservableObject {
         self.newShowsAttendedContinuation = continuation
     }
 
-    // make init an async func
-    // only observe single event here, to get initial values
-    // create separate func to begin listening for new items
-    // have the other observe code here
-
-    func getShowsAttended() throws -> AsyncStream<UserShowDbModel> {
-
-        // TODO: use database path error
+    func loadShowsAttended() async throws -> [UserShowDbModel] {
         guard let databasePath else { throw CocoaError(.coderReadCorrupt) }
 
-        return AsyncStream { continuation in
-
-            Task {
-                await withCheckedContinuation { innerContinuation in
-                    databasePath.observeSingleEvent(of: .value, with: { data in
-
-                        guard let json = data.value as? [String: Any] else {
-                            innerContinuation.resume()
-                            return
-                        }
-
-                        do {
-                            defer { continuation.finish() }
-                            let data = try JSONSerialization.data(withJSONObject: json)
-                            let showsDecoded = try JSONDecoder().decode([String: UserShowDbModel].self, from: data)
-                            let shows = showsDecoded.values.map { $0 }
-                            shows.forEach {
-                                self.showsAttended.append($0)
-                                continuation.yield($0)
-                            }
-                            innerContinuation.resume()
-                        } catch {
-                            print(error)
-                            innerContinuation.resume()
-                        }
-                    })
-                }
-            }
+        let snapshot: DataSnapshot = try await withCheckedThrowingContinuation { continuation in
+            databasePath.observeSingleEvent(
+                of: .value,
+                with: { continuation.resume(returning: $0) },
+                withCancel: { continuation.resume(throwing: $0) }
+            )
         }
+
+        guard let json = snapshot.value as? [String: Any] else { return [] }
+
+        let data = try JSONSerialization.data(withJSONObject: json)
+        let decoded = try JSONDecoder().decode([String: UserShowDbModel].self, from: data)
+        let shows = Array(decoded.values)
+        self.showsAttended = shows
+        return shows
     }
 
     func beginListeningForNewShowsAdded() {
         guard let databasePath else { return }
         self.handle = databasePath.observe(.childAdded) { [weak self] data in
-            guard let self,
-                  let json = data.value as? [String: Any] else { return }
-            do {
-                let data = try JSONSerialization.data(withJSONObject: json)
-                let newShowDecoded = try JSONDecoder().decode(UserShowDbModel.self, from: data)
-                if !self.showsAttended.contains(newShowDecoded) {
-                    self.showsAttended.append(newShowDecoded)
-                    self.newShowsAttendedContinuation.yield(newShowDecoded)
+            guard let json = data.value as? [String: Any] else { return }
+            Task { @MainActor in
+                guard let self else { return }
+                do {
+                    let bytes = try JSONSerialization.data(withJSONObject: json)
+                    let newShow = try JSONDecoder().decode(UserShowDbModel.self, from: bytes)
+                    guard !self.showsAttended.contains(newShow) else { return }
+                    self.showsAttended.append(newShow)
+                    self.newShowsAttendedContinuation.yield(newShow)
                     self.newShowAttendedCount += 1
+                } catch {
+                    print(error)
                 }
-            } catch {
-                print(error)
             }
         }
     }
 
-    deinit {
-        self.newShowsAttendedContinuation.finish()
-        self.databasePath?.removeObserver(withHandle: handle)
+    isolated deinit {
+        newShowsAttendedContinuation.finish()
+        if let handle {
+            databasePath?.removeObserver(withHandle: handle)
+        }
     }
 
     func getSetlist(concertId: String) {
@@ -112,7 +99,7 @@ final class UserConcertsService: UserConcertsServiceProtocol, ObservableObject {
 
     func addShowAsAttended(_ show: SetlistResponse) {
 
-        let user = AuthenticationService().user!
+        guard let user = AuthenticationService().user else { return }
 
         do {
             let userShowData = try JSONEncoder().encode(show.toUserShowDbModel())
@@ -172,7 +159,7 @@ final class UserConcertsService: UserConcertsServiceProtocol, ObservableObject {
     }
 
     func removeShowAsAttended(id: String) {
-        let user = AuthenticationService().user!
+        guard let user = AuthenticationService().user else { return }
         self.reference
             .ref
             .child("users")
