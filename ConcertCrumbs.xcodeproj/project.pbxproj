@@ -13,22 +13,26 @@
 		D242B514297DF23100EFA061 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D242B513297DF23100EFA061 /* SplashScreen.swift */; };
 		D242B569298EC16200EFA061 /* ShowsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D242B568298EC16200EFA061 /* ShowsViewModel.swift */; };
 		D246CD492FAF7BD000B319D5 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246CD472FAF7BD000B319D5 /* AccountView.swift */; };
+		D246CD4F2FBAC1EA00B319D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D246CD4E2FBAC1EA00B319D5 /* GoogleService-Info.plist */; };
+		D246CD502FBAC1EA00B319D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D246CD4E2FBAC1EA00B319D5 /* GoogleService-Info.plist */; };
+		D246CD512FBAC1EA00B319D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D246CD4E2FBAC1EA00B319D5 /* GoogleService-Info.plist */; };
+		D246CD532FBBF33C00B319D5 /* SpotifyApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246CD522FBBF33C00B319D5 /* SpotifyApi.swift */; };
+		D246CD552FBD3A5000B319D5 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246CD542FBD3A5000B319D5 /* KeychainHelper.swift */; };
+		D246CD572FBD3C7D00B319D5 /* SpotifyNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246CD562FBD3C7D00B319D5 /* SpotifyNetworkClient.swift */; };
+		D246CD5A2FBD428400B319D5 /* SpotifyAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246CD592FBD428400B319D5 /* SpotifyAuthService.swift */; };
 		D24B45E429B54B92002DEDC8 /* UserSetlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24B45E329B54B92002DEDC8 /* UserSetlistView.swift */; };
 		D252D863285FA45200A4B79D /* ArtistShowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D252D862285FA45200A4B79D /* ArtistShowsView.swift */; };
 		D25366A22969F40200C7ED6E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D25366A12969F40200C7ED6E /* FirebaseAuth */; };
 		D25366A42969F45500C7ED6E /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25366A32969F45500C7ED6E /* AuthenticationService.swift */; };
 		D262451C2A1D6012007E46AE /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = D262451B2A1D6012007E46AE /* AsyncAlgorithms */; };
-		D2796A092842742E007016CE /* ConcertTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A082842742E007016CE /* ConcertTrackerApp.swift */; };
+		D2796A092842742E007016CE /* ConcertCrumbsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A082842742E007016CE /* ConcertCrumbsApp.swift */; };
 		D2796A0B2842742E007016CE /* InitUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A0A2842742E007016CE /* InitUsernameView.swift */; };
 		D2796A0D28427431007016CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2796A0C28427431007016CE /* Assets.xcassets */; };
 		D2796A1028427431007016CE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2796A0F28427431007016CE /* Preview Assets.xcassets */; };
-		D2796A1A28427432007016CE /* ConcertTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A1928427432007016CE /* ConcertTrackerTests.swift */; };
-		D2796A2428427432007016CE /* ConcertTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A2328427432007016CE /* ConcertTrackerUITests.swift */; };
-		D2796A2628427432007016CE /* ConcertTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A2528427432007016CE /* ConcertTrackerUITestsLaunchTests.swift */; };
+		D2796A1A28427432007016CE /* ConcertCrumbsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A1928427432007016CE /* ConcertCrumbsTests.swift */; };
+		D2796A2428427432007016CE /* ConcertCrumbsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A2328427432007016CE /* ConcertCrumbsUITests.swift */; };
+		D2796A2628427432007016CE /* ConcertCrumbsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A2528427432007016CE /* ConcertCrumbsUITestsLaunchTests.swift */; };
 		D2796A3428427527007016CE /* SetlistApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2796A3328427527007016CE /* SetlistApi.swift */; };
-		D2AB26B42F99959C00D78D9E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D2AB26B32F99959C00D78D9E /* GoogleService-Info.plist */; };
-		D2AB26B52F99959C00D78D9E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D2AB26B32F99959C00D78D9E /* GoogleService-Info.plist */; };
-		D2AB26B62F99959C00D78D9E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D2AB26B32F99959C00D78D9E /* GoogleService-Info.plist */; };
 		D2B3257C2995D3E4002DBCCB /* SetlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B3257B2995D3E4002DBCCB /* SetlistViewModel.swift */; };
 		D2B3257F2999BEC2002DBCCB /* UserConcertsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B3257E2999BEC2002DBCCB /* UserConcertsService.swift */; };
 		D2B325822999C3AB002DBCCB /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = D2B325812999C3AB002DBCCB /* FirebaseDatabase */; };
@@ -62,26 +66,30 @@
 /* Begin PBXFileReference section */
 		D20D0D2C28C3B12F00C2BD25 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
 		D20D0D3528C3D0FA00C2BD25 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		D2207405295E2A7A00F7A918 /* ConcertTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ConcertTracker.entitlements; sourceTree = "<group>"; };
+		D2207405295E2A7A00F7A918 /* ConcertCrumbs.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ConcertCrumbs.entitlements; sourceTree = "<group>"; };
 		D22E1FE229947B480004E8CD /* SetlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetlistView.swift; sourceTree = "<group>"; };
 		D242B513297DF23100EFA061 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		D242B568298EC16200EFA061 /* ShowsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsViewModel.swift; sourceTree = "<group>"; };
 		D246CD472FAF7BD000B319D5 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		D246CD4E2FBAC1EA00B319D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D246CD522FBBF33C00B319D5 /* SpotifyApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyApi.swift; sourceTree = "<group>"; };
+		D246CD542FBD3A5000B319D5 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		D246CD562FBD3C7D00B319D5 /* SpotifyNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyNetworkClient.swift; sourceTree = "<group>"; };
+		D246CD592FBD428400B319D5 /* SpotifyAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAuthService.swift; sourceTree = "<group>"; };
 		D24B45E329B54B92002DEDC8 /* UserSetlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetlistView.swift; sourceTree = "<group>"; };
 		D252D862285FA45200A4B79D /* ArtistShowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistShowsView.swift; sourceTree = "<group>"; };
 		D25366A32969F45500C7ED6E /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
-		D2796A052842742E007016CE /* ConcertTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConcertTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2796A082842742E007016CE /* ConcertTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertTrackerApp.swift; sourceTree = "<group>"; };
+		D2796A052842742E007016CE /* ConcertCrumbs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConcertCrumbs.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2796A082842742E007016CE /* ConcertCrumbsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertCrumbsApp.swift; sourceTree = "<group>"; };
 		D2796A0A2842742E007016CE /* InitUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitUsernameView.swift; sourceTree = "<group>"; };
 		D2796A0C28427431007016CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D2796A0F28427431007016CE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		D2796A1528427432007016CE /* ConcertTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConcertTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2796A1928427432007016CE /* ConcertTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertTrackerTests.swift; sourceTree = "<group>"; };
-		D2796A1F28427432007016CE /* ConcertTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConcertTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2796A2328427432007016CE /* ConcertTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertTrackerUITests.swift; sourceTree = "<group>"; };
-		D2796A2528427432007016CE /* ConcertTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D2796A1528427432007016CE /* ConcertCrumbsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConcertCrumbsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2796A1928427432007016CE /* ConcertCrumbsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertCrumbsTests.swift; sourceTree = "<group>"; };
+		D2796A1F28427432007016CE /* ConcertCrumbsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConcertCrumbsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2796A2328427432007016CE /* ConcertCrumbsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertCrumbsUITests.swift; sourceTree = "<group>"; };
+		D2796A2528427432007016CE /* ConcertCrumbsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcertCrumbsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D2796A3328427527007016CE /* SetlistApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetlistApi.swift; sourceTree = "<group>"; };
-		D2AB26B32F99959C00D78D9E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D2B3257B2995D3E4002DBCCB /* SetlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetlistViewModel.swift; sourceTree = "<group>"; };
 		D2B3257E2999BEC2002DBCCB /* UserConcertsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConcertsService.swift; sourceTree = "<group>"; };
 		D2B3258329A3CBBA002DBCCB /* UserShowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserShowsView.swift; sourceTree = "<group>"; };
@@ -169,13 +177,22 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
+		D246CD582FBD3C8300B319D5 /* Spotify */ = {
+			isa = PBXGroup;
+			children = (
+				D246CD562FBD3C7D00B319D5 /* SpotifyNetworkClient.swift */,
+				D246CD522FBBF33C00B319D5 /* SpotifyApi.swift */,
+			);
+			path = Spotify;
+			sourceTree = "<group>";
+		};
 		D27969FC2842742E007016CE = {
 			isa = PBXGroup;
 			children = (
 				D2F4AEDA28C534A6002A05D3 /* Localizable.strings */,
-				D2AB26B32F99959C00D78D9E /* GoogleService-Info.plist */,
-				D2796A072842742E007016CE /* ConcertTracker */,
-				D2796A1828427432007016CE /* ConcertTrackerTests */,
+				D246CD4E2FBAC1EA00B319D5 /* GoogleService-Info.plist */,
+				D2796A072842742E007016CE /* ConcertCrumbs */,
+				D2796A1828427432007016CE /* ConcertCrumbsTests */,
 				D2796A2228427432007016CE /* ConcertTrackerUITests */,
 				D2796A062842742E007016CE /* Products */,
 				D2B325802999C3AB002DBCCB /* Frameworks */,
@@ -185,30 +202,30 @@
 		D2796A062842742E007016CE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D2796A052842742E007016CE /* ConcertTracker.app */,
-				D2796A1528427432007016CE /* ConcertTrackerTests.xctest */,
-				D2796A1F28427432007016CE /* ConcertTrackerUITests.xctest */,
+				D2796A052842742E007016CE /* ConcertCrumbs.app */,
+				D2796A1528427432007016CE /* ConcertCrumbsTests.xctest */,
+				D2796A1F28427432007016CE /* ConcertCrumbsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D2796A072842742E007016CE /* ConcertTracker */ = {
+		D2796A072842742E007016CE /* ConcertCrumbs */ = {
 			isa = PBXGroup;
 			children = (
 				D2B3257D2999BC63002DBCCB /* Data */,
 				D2796A32284274BF007016CE /* Networking */,
 				D2796A352842F3F1007016CE /* Service */,
 				D22E1FDF299477F60004E8CD /* Modules */,
-				D2796A082842742E007016CE /* ConcertTrackerApp.swift */,
+				D2796A082842742E007016CE /* ConcertCrumbsApp.swift */,
 				D2796A0A2842742E007016CE /* InitUsernameView.swift */,
 				D2BDEFE1285513B9003FC4A2 /* Secrets.swift */,
 				D20D0D3528C3D0FA00C2BD25 /* Constants.swift */,
 				D242B513297DF23100EFA061 /* SplashScreen.swift */,
-				D2207405295E2A7A00F7A918 /* ConcertTracker.entitlements */,
+				D2207405295E2A7A00F7A918 /* ConcertCrumbs.entitlements */,
 				D2796A0C28427431007016CE /* Assets.xcassets */,
 				D2796A0E28427431007016CE /* Preview Content */,
 			);
-			path = ConcertTracker;
+			path = ConcertCrumbs;
 			sourceTree = "<group>";
 		};
 		D2796A0E28427431007016CE /* Preview Content */ = {
@@ -219,19 +236,19 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		D2796A1828427432007016CE /* ConcertTrackerTests */ = {
+		D2796A1828427432007016CE /* ConcertCrumbsTests */ = {
 			isa = PBXGroup;
 			children = (
-				D2796A1928427432007016CE /* ConcertTrackerTests.swift */,
+				D2796A1928427432007016CE /* ConcertCrumbsTests.swift */,
 			);
-			path = ConcertTrackerTests;
+			path = ConcertCrumbsTests;
 			sourceTree = "<group>";
 		};
 		D2796A2228427432007016CE /* ConcertTrackerUITests */ = {
 			isa = PBXGroup;
 			children = (
-				D2796A2328427432007016CE /* ConcertTrackerUITests.swift */,
-				D2796A2528427432007016CE /* ConcertTrackerUITestsLaunchTests.swift */,
+				D2796A2328427432007016CE /* ConcertCrumbsUITests.swift */,
+				D2796A2528427432007016CE /* ConcertCrumbsUITestsLaunchTests.swift */,
 			);
 			path = ConcertTrackerUITests;
 			sourceTree = "<group>";
@@ -239,6 +256,7 @@
 		D2796A32284274BF007016CE /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				D246CD582FBD3C8300B319D5 /* Spotify */,
 				D2796A3328427527007016CE /* SetlistApi.swift */,
 			);
 			path = Networking;
@@ -247,9 +265,11 @@
 		D2796A352842F3F1007016CE /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				D246CD592FBD428400B319D5 /* SpotifyAuthService.swift */,
 				D2F9851828518C0E00D56104 /* SetlistService.swift */,
 				D20D0D2C28C3B12F00C2BD25 /* UserDefaultsService.swift */,
 				D25366A32969F45500C7ED6E /* AuthenticationService.swift */,
+				D246CD542FBD3A5000B319D5 /* KeychainHelper.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -291,9 +311,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D2796A042842742E007016CE /* ConcertTracker */ = {
+		D2796A042842742E007016CE /* ConcertCrumbs */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D2796A2928427432007016CE /* Build configuration list for PBXNativeTarget "ConcertTracker" */;
+			buildConfigurationList = D2796A2928427432007016CE /* Build configuration list for PBXNativeTarget "ConcertCrumbs" */;
 			buildPhases = (
 				D2796A012842742E007016CE /* Sources */,
 				D2796A022842742E007016CE /* Frameworks */,
@@ -303,19 +323,19 @@
 			);
 			dependencies = (
 			);
-			name = ConcertTracker;
+			name = ConcertCrumbs;
 			packageProductDependencies = (
 				D25366A12969F40200C7ED6E /* FirebaseAuth */,
 				D2B325812999C3AB002DBCCB /* FirebaseDatabase */,
 				D262451B2A1D6012007E46AE /* AsyncAlgorithms */,
 			);
 			productName = ConcertTracker;
-			productReference = D2796A052842742E007016CE /* ConcertTracker.app */;
+			productReference = D2796A052842742E007016CE /* ConcertCrumbs.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D2796A1428427432007016CE /* ConcertTrackerTests */ = {
+		D2796A1428427432007016CE /* ConcertCrumbsTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D2796A2C28427432007016CE /* Build configuration list for PBXNativeTarget "ConcertTrackerTests" */;
+			buildConfigurationList = D2796A2C28427432007016CE /* Build configuration list for PBXNativeTarget "ConcertCrumbsTests" */;
 			buildPhases = (
 				D2796A1128427432007016CE /* Sources */,
 				D2796A1228427432007016CE /* Frameworks */,
@@ -326,14 +346,14 @@
 			dependencies = (
 				D2796A1728427432007016CE /* PBXTargetDependency */,
 			);
-			name = ConcertTrackerTests;
+			name = ConcertCrumbsTests;
 			productName = ConcertTrackerTests;
-			productReference = D2796A1528427432007016CE /* ConcertTrackerTests.xctest */;
+			productReference = D2796A1528427432007016CE /* ConcertCrumbsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		D2796A1E28427432007016CE /* ConcertTrackerUITests */ = {
+		D2796A1E28427432007016CE /* ConcertCrumbsUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D2796A2F28427432007016CE /* Build configuration list for PBXNativeTarget "ConcertTrackerUITests" */;
+			buildConfigurationList = D2796A2F28427432007016CE /* Build configuration list for PBXNativeTarget "ConcertCrumbsUITests" */;
 			buildPhases = (
 				D2796A1B28427432007016CE /* Sources */,
 				D2796A1C28427432007016CE /* Frameworks */,
@@ -344,9 +364,9 @@
 			dependencies = (
 				D2796A2128427432007016CE /* PBXTargetDependency */,
 			);
-			name = ConcertTrackerUITests;
+			name = ConcertCrumbsUITests;
 			productName = ConcertTrackerUITests;
-			productReference = D2796A1F28427432007016CE /* ConcertTrackerUITests.xctest */;
+			productReference = D2796A1F28427432007016CE /* ConcertCrumbsUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -372,7 +392,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D2796A002842742E007016CE /* Build configuration list for PBXProject "ConcertTracker" */;
+			buildConfigurationList = D2796A002842742E007016CE /* Build configuration list for PBXProject "ConcertCrumbs" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -389,9 +409,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D2796A042842742E007016CE /* ConcertTracker */,
-				D2796A1428427432007016CE /* ConcertTrackerTests */,
-				D2796A1E28427432007016CE /* ConcertTrackerUITests */,
+				D2796A042842742E007016CE /* ConcertCrumbs */,
+				D2796A1428427432007016CE /* ConcertCrumbsTests */,
+				D2796A1E28427432007016CE /* ConcertCrumbsUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -401,9 +421,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2AB26B52F99959C00D78D9E /* GoogleService-Info.plist in Resources */,
 				D2796A1028427431007016CE /* Preview Assets.xcassets in Resources */,
 				D2F4AEDB28C534A6002A05D3 /* Localizable.strings in Resources */,
+				D246CD4F2FBAC1EA00B319D5 /* GoogleService-Info.plist in Resources */,
 				D2796A0D28427431007016CE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,7 +432,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2AB26B42F99959C00D78D9E /* GoogleService-Info.plist in Resources */,
+				D246CD512FBAC1EA00B319D5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,7 +440,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2AB26B62F99959C00D78D9E /* GoogleService-Info.plist in Resources */,
+				D246CD502FBAC1EA00B319D5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,8 +452,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D242B514297DF23100EFA061 /* SplashScreen.swift in Sources */,
+				D246CD532FBBF33C00B319D5 /* SpotifyApi.swift in Sources */,
 				D2B3257F2999BEC2002DBCCB /* UserConcertsService.swift in Sources */,
 				D20D0D2D28C3B12F00C2BD25 /* UserDefaultsService.swift in Sources */,
+				D246CD572FBD3C7D00B319D5 /* SpotifyNetworkClient.swift in Sources */,
+				D246CD5A2FBD428400B319D5 /* SpotifyAuthService.swift in Sources */,
 				D2BDEFE2285513B9003FC4A2 /* Secrets.swift in Sources */,
 				D2796A0B2842742E007016CE /* InitUsernameView.swift in Sources */,
 				D2F98513284EDD2E00D56104 /* ArtistsView.swift in Sources */,
@@ -446,11 +469,12 @@
 				D2B3257C2995D3E4002DBCCB /* SetlistViewModel.swift in Sources */,
 				D2F9851928518C0E00D56104 /* SetlistService.swift in Sources */,
 				D2B3258729A3CC6C002DBCCB /* UserShowsViewModel.swift in Sources */,
-				D2796A092842742E007016CE /* ConcertTrackerApp.swift in Sources */,
+				D2796A092842742E007016CE /* ConcertCrumbsApp.swift in Sources */,
 				D25366A42969F45500C7ED6E /* AuthenticationService.swift in Sources */,
 				D2FFCA0A29C787C500FBF80D /* UserSetlistViewModel.swift in Sources */,
 				D242B569298EC16200EFA061 /* ShowsViewModel.swift in Sources */,
 				D2B3258429A3CBBA002DBCCB /* UserShowsView.swift in Sources */,
+				D246CD552FBD3A5000B319D5 /* KeychainHelper.swift in Sources */,
 				D22E1FE329947B480004E8CD /* SetlistView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,7 +483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2796A1A28427432007016CE /* ConcertTrackerTests.swift in Sources */,
+				D2796A1A28427432007016CE /* ConcertCrumbsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,8 +491,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2796A2628427432007016CE /* ConcertTrackerUITestsLaunchTests.swift in Sources */,
-				D2796A2428427432007016CE /* ConcertTrackerUITests.swift in Sources */,
+				D2796A2628427432007016CE /* ConcertCrumbsUITestsLaunchTests.swift in Sources */,
+				D2796A2428427432007016CE /* ConcertCrumbsUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,12 +501,12 @@
 /* Begin PBXTargetDependency section */
 		D2796A1728427432007016CE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D2796A042842742E007016CE /* ConcertTracker */;
+			target = D2796A042842742E007016CE /* ConcertCrumbs */;
 			targetProxy = D2796A1628427432007016CE /* PBXContainerItemProxy */;
 		};
 		D2796A2128427432007016CE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D2796A042842742E007016CE /* ConcertTracker */;
+			target = D2796A042842742E007016CE /* ConcertCrumbs */;
 			targetProxy = D2796A2028427432007016CE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -613,10 +637,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = ConcertTracker/ConcertTracker.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ConcertCrumbs/ConcertCrumbs.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ConcertTracker/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"ConcertCrumbs/Preview Content\"";
 				DEVELOPMENT_TEAM = YD9249X8JH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -644,10 +668,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = ConcertTracker/ConcertTracker.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ConcertCrumbs/ConcertCrumbs.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ConcertTracker/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"ConcertCrumbs/Preview Content\"";
 				DEVELOPMENT_TEAM = YD9249X8JH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -686,7 +710,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConcertTracker.app/ConcertTracker";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConcertCrumbs.app/ConcertCrumbs";
 			};
 			name = Debug;
 		};
@@ -706,7 +730,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConcertTracker.app/ConcertTracker";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ConcertCrumbs.app/ConcertCrumbs";
 			};
 			name = Release;
 		};
@@ -751,7 +775,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D2796A002842742E007016CE /* Build configuration list for PBXProject "ConcertTracker" */ = {
+		D2796A002842742E007016CE /* Build configuration list for PBXProject "ConcertCrumbs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D2796A2728427432007016CE /* Debug */,
@@ -760,7 +784,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D2796A2928427432007016CE /* Build configuration list for PBXNativeTarget "ConcertTracker" */ = {
+		D2796A2928427432007016CE /* Build configuration list for PBXNativeTarget "ConcertCrumbs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D2796A2A28427432007016CE /* Debug */,
@@ -769,7 +793,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D2796A2C28427432007016CE /* Build configuration list for PBXNativeTarget "ConcertTrackerTests" */ = {
+		D2796A2C28427432007016CE /* Build configuration list for PBXNativeTarget "ConcertCrumbsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D2796A2D28427432007016CE /* Debug */,
@@ -778,7 +802,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D2796A2F28427432007016CE /* Build configuration list for PBXNativeTarget "ConcertTrackerUITests" */ = {
+		D2796A2F28427432007016CE /* Build configuration list for PBXNativeTarget "ConcertCrumbsUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D2796A3028427432007016CE /* Debug */,

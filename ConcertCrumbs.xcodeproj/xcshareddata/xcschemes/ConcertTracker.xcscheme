@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D2796A042842742E007016CE"
-               BuildableName = "ConcertTracker.app"
-               BlueprintName = "ConcertTracker"
-               ReferencedContainer = "container:ConcertTracker.xcodeproj">
+               BuildableName = "ConcertCrumbs.app"
+               BlueprintName = "ConcertCrumbs"
+               ReferencedContainer = "container:ConcertCrumbs.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,9 +35,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D2796A1428427432007016CE"
-               BuildableName = "ConcertTrackerTests.xctest"
-               BlueprintName = "ConcertTrackerTests"
-               ReferencedContainer = "container:ConcertTracker.xcodeproj">
+               BuildableName = "ConcertCrumbsTests.xctest"
+               BlueprintName = "ConcertCrumbsTests"
+               ReferencedContainer = "container:ConcertCrumbs.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -45,9 +45,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D2796A1E28427432007016CE"
-               BuildableName = "ConcertTrackerUITests.xctest"
-               BlueprintName = "ConcertTrackerUITests"
-               ReferencedContainer = "container:ConcertTracker.xcodeproj">
+               BuildableName = "ConcertCrumbsUITests.xctest"
+               BlueprintName = "ConcertCrumbsUITests"
+               ReferencedContainer = "container:ConcertCrumbs.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D2796A042842742E007016CE"
-            BuildableName = "ConcertTracker.app"
-            BlueprintName = "ConcertTracker"
-            ReferencedContainer = "container:ConcertTracker.xcodeproj">
+            BuildableName = "ConcertCrumbs.app"
+            BlueprintName = "ConcertCrumbs"
+            ReferencedContainer = "container:ConcertCrumbs.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -85,9 +85,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D2796A042842742E007016CE"
-            BuildableName = "ConcertTracker.app"
-            BlueprintName = "ConcertTracker"
-            ReferencedContainer = "container:ConcertTracker.xcodeproj">
+            BuildableName = "ConcertCrumbs.app"
+            BlueprintName = "ConcertCrumbs"
+            ReferencedContainer = "container:ConcertCrumbs.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

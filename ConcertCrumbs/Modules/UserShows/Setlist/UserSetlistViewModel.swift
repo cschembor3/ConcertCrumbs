@@ -8,9 +8,10 @@
 import Foundation
 
 @MainActor
-final class UserSetlistViewModel: ObservableObject {
+@Observable
+final class UserSetlistViewModel {
 
-    @Published private(set) var setlistInfo: UserSetlistDisplayInfo?
+    private(set) var setlistInfo: UserSetlistDisplayInfo?
 
     private let setlistService: SetlistServiceInterface
     init(showId: String, setlistService: SetlistServiceInterface = SetlistService()) {
@@ -19,7 +20,7 @@ final class UserSetlistViewModel: ObservableObject {
             await self.populateSetlist(for: showId)
         }
     }
-    
+
     private func populateSetlist(for showId: String) async {
         guard let setlistResponse = try? await self.setlistService.getSetlist(for: showId) else {
             return

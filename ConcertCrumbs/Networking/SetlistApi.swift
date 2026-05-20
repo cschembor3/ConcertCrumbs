@@ -18,7 +18,7 @@ struct SetlistApi: SetlistApiInterface {
 
     private static let baseUrl = "https://api.setlist.fm/rest/1.0"
     private static let acceptHeader: (header: String, responseType: String) = ("Accept", "application/json")
-    private static let apiKeyHeader: (header: String, apiKey: String) = ("x-api-key", Secrets.setlistApiKey)
+    private static let apiKeyHeader: (header: String, apiKey: String) = ("x-api-key", Secrets.SetlistFm.setlistApiKey)
 
     func searchArtists(artistName: String, page: Int = 1) async throws -> ArtistSearchResponse {
 

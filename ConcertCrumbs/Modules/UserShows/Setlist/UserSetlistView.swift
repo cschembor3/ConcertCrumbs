@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserSetlistView: View {
 
-    @ObservedObject private var viewModel: UserSetlistViewModel
+    private var viewModel: UserSetlistViewModel
 
     init(viewModel: UserSetlistViewModel) {
         self.viewModel = viewModel
@@ -50,7 +50,14 @@ struct UserSetlistView: View {
 
             Section("Create Playlist") {
                 Button("Spotify") {
-                    print("hi")
+                    Task {
+                        do {
+                            let token = try await SpotifyApi().fetchAuthToken()
+                            print("🪙 - \(token)")
+                        } catch {
+                            print(error)
+                        }
+                    }
                 }
             }
         }
