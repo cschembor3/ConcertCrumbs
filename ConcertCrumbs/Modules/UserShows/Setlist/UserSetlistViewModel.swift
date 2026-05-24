@@ -12,10 +12,18 @@ import Foundation
 final class UserSetlistViewModel {
 
     private(set) var setlistInfo: UserSetlistDisplayInfo?
+    private(set) var albumImages: [String: String] = [:]
 
     private let setlistService: SetlistServiceInterface
-    init(showId: String, setlistService: SetlistServiceInterface = SetlistService()) {
+    private let musicApi: SpotifyMusicApiInterface
+
+    init(
+        showId: String,
+        setlistService: SetlistServiceInterface = SetlistService(),
+        musicApi: SpotifyMusicApiInterface = SpotifyMusicApi()
+    ) {
         self.setlistService = setlistService
+        self.musicApi = musicApi
         Task {
             await self.populateSetlist(for: showId)
         }
@@ -27,6 +35,30 @@ final class UserSetlistViewModel {
         }
 
         self.setlistInfo = .init(from: setlistResponse)
+        await fetchAlbumImages(artistName: setlistResponse.artist.name)
+    }
+
+    private func fetchAlbumImages(artistName: String) async {
+        let allSongs = (setlistInfo?.setlist.setSongs ?? []) +
+            (setlistInfo?.setlist.encores?.flatMap(\.songs) ?? [])
+
+        await withTaskGroup(of: (String, String?).self) { group in
+            for song in allSongs {
+                group.addTask {
+                    let response = try? await self.musicApi.searchTracks(
+                        query: "\(artistName) \(song)",
+                        limit: 1
+                    )
+                    return (song, response?.tracks.items.first?.album.images.last?.url)
+                }
+            }
+
+            for await (song, imageUrl) in group {
+                if let url = imageUrl {
+                    self.albumImages[song] = url
+                }
+            }
+        }
     }
 
     struct UserSetlistDisplayInfo: Identifiable {

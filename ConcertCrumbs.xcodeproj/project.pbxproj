@@ -16,7 +16,7 @@
 		D246CD4F2FBAC1EA00B319D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D246CD4E2FBAC1EA00B319D5 /* GoogleService-Info.plist */; };
 		D246CD502FBAC1EA00B319D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D246CD4E2FBAC1EA00B319D5 /* GoogleService-Info.plist */; };
 		D246CD512FBAC1EA00B319D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D246CD4E2FBAC1EA00B319D5 /* GoogleService-Info.plist */; };
-		D246CD532FBBF33C00B319D5 /* SpotifyApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246CD522FBBF33C00B319D5 /* SpotifyApi.swift */; };
+		D246CD532FBBF33C00B319D5 /* SpotifyAuthApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246CD522FBBF33C00B319D5 /* SpotifyAuthApi.swift */; };
 		D246CD552FBD3A5000B319D5 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246CD542FBD3A5000B319D5 /* KeychainHelper.swift */; };
 		D246CD572FBD3C7D00B319D5 /* SpotifyNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246CD562FBD3C7D00B319D5 /* SpotifyNetworkClient.swift */; };
 		D246CD5A2FBD428400B319D5 /* SpotifyAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D246CD592FBD428400B319D5 /* SpotifyAuthService.swift */; };
@@ -72,7 +72,7 @@
 		D242B568298EC16200EFA061 /* ShowsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowsViewModel.swift; sourceTree = "<group>"; };
 		D246CD472FAF7BD000B319D5 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		D246CD4E2FBAC1EA00B319D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		D246CD522FBBF33C00B319D5 /* SpotifyApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyApi.swift; sourceTree = "<group>"; };
+		D246CD522FBBF33C00B319D5 /* SpotifyAuthApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAuthApi.swift; sourceTree = "<group>"; };
 		D246CD542FBD3A5000B319D5 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		D246CD562FBD3C7D00B319D5 /* SpotifyNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyNetworkClient.swift; sourceTree = "<group>"; };
 		D246CD592FBD428400B319D5 /* SpotifyAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyAuthService.swift; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				D246CD562FBD3C7D00B319D5 /* SpotifyNetworkClient.swift */,
-				D246CD522FBBF33C00B319D5 /* SpotifyApi.swift */,
+				D246CD522FBBF33C00B319D5 /* SpotifyAuthApi.swift */,
 			);
 			path = Spotify;
 			sourceTree = "<group>";
@@ -452,7 +452,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D242B514297DF23100EFA061 /* SplashScreen.swift in Sources */,
-				D246CD532FBBF33C00B319D5 /* SpotifyApi.swift in Sources */,
+				D246CD532FBBF33C00B319D5 /* SpotifyAuthApi.swift in Sources */,
 				D2B3257F2999BEC2002DBCCB /* UserConcertsService.swift in Sources */,
 				D20D0D2D28C3B12F00C2BD25 /* UserDefaultsService.swift in Sources */,
 				D246CD572FBD3C7D00B319D5 /* SpotifyNetworkClient.swift in Sources */,

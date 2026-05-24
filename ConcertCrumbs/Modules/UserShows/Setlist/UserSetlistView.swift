@@ -32,7 +32,7 @@ struct UserSetlistView: View {
 
             Section("Setlist") {
                 ForEach(viewModel.setlistInfo?.setlist.setSongs ?? [], id: \.self) { song in
-                    Text(song)
+                    SongRow(song: song, imageUrl: viewModel.albumImages[song])
                 }
             }
 
@@ -42,7 +42,7 @@ struct UserSetlistView: View {
                 ForEach(encores) { encore in
                     Section("Encore \(encore.number)") {
                         ForEach(encore.songs, id: \.self) { song in
-                            Text(song)
+                            SongRow(song: song, imageUrl: viewModel.albumImages[song])
                         }
                     }
                 }
@@ -50,14 +50,7 @@ struct UserSetlistView: View {
 
             Section("Create Playlist") {
                 Button("Spotify") {
-                    Task {
-                        do {
-                            let token = try await SpotifyApi().fetchAuthToken()
-                            print("🪙 - \(token)")
-                        } catch {
-                            print(error)
-                        }
-                    }
+                    // TODO: create Spotify playlist from fetched tracks
                 }
             }
         }
@@ -67,6 +60,27 @@ struct UserSetlistView: View {
     }
 }
 
+
+private struct SongRow: View {
+
+    let song: String
+    let imageUrl: String?
+
+    var body: some View {
+        HStack(spacing: 12) {
+            AsyncImage(url: imageUrl.flatMap(URL.init)) { image in
+                image.resizable().scaledToFill()
+            } placeholder: {
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.secondary.opacity(0.2))
+            }
+            .frame(width: 44, height: 44)
+            .clipShape(RoundedRectangle(cornerRadius: 4))
+
+            Text(song)
+        }
+    }
+}
 
 struct UserSetlistView_Previews: PreviewProvider {
     static var previews: some View {

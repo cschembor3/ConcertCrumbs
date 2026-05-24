@@ -21,12 +21,12 @@ final class SpotifyAuthService: SpotifyAuthServiceInterface {
 
     private static let expiryBuffer: TimeInterval = 60
 
-    private let api: SpotifyApiInterface
+    private let api: SpotifyAuthApiInterface
     private let keychain: KeychainHelperInterface
     private let userDefaults: UserDefaults
 
     init(
-        api: SpotifyApiInterface = SpotifyApi(),
+        api: SpotifyAuthApiInterface = SpotifyAuthApi(),
         keychain: KeychainHelperInterface = KeychainHelper(),
         userDefaults: UserDefaults = .standard
     ) {
