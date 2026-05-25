@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserSetlistView: View {
 
-    private var viewModel: UserSetlistViewModel
+    @State var viewModel: UserSetlistViewModel
 
     init(viewModel: UserSetlistViewModel) {
         self.viewModel = viewModel

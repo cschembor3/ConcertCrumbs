@@ -14,77 +14,36 @@ struct UserShowsView<ViewModel>: View where ViewModel: UserShowsViewModelProtoco
         case byYear
     }
 
+    struct SetlistDestination: Hashable {
+        let showId: String
+    }
+
     @State private var chosenArtist: ShowSeenEntry?
     @State private var groupingMode: GroupingMode = .alphabetical
+    @State private var path = NavigationPath()
     @State private var viewModel: ViewModel
 
     init(viewModel: ViewModel) {
         _viewModel = State(wrappedValue: viewModel)
     }
 
-    private var entriesByLetter: [(String, [ShowSeenEntry])] {
-        let grouped = Dictionary(grouping: viewModel.entries) {
-            let first = String($0.name.prefix(1)).uppercased()
-            return first.isEmpty ? "#" : first
-        }
-        return grouped.keys.sorted().map { ($0, grouped[$0]!) }
-    }
-
-    private var entriesByYear: [(year: String, shows: [(artistName: String, show: ShowSeenEntry)])] {
-        let allShows: [(artistName: String, show: ShowSeenEntry)] = viewModel.entries.flatMap { artist in
-            (artist.children ?? []).map { (artistName: artist.name, show: $0) }
-        }
-
-        let grouped = Dictionary(grouping: allShows) { pair in
-            if let date = pair.show.date {
-                return String(Calendar.current.component(.year, from: date))
-            }
-            return "Unknown"
-        }
-
-        return grouped.keys.sorted(by: >).map { year in
-            let yearShows = grouped[year]!.sorted {
-                ($0.show.date ?? .distantPast) > ($1.show.date ?? .distantPast)
-            }
-            return (year: year, shows: yearShows)
-        }
-    }
-
     var body: some View {
 
-        NavigationStack {
+        NavigationStack(path: $path) {
             List {
                 switch groupingMode {
                 case .alphabetical:
-                    ForEach(entriesByLetter, id: \.0) { letter, entries in
-                        Section(letter) {
-                            ForEach(entries, id: \.id) { entry in
-                                ShowsAttendedByArtistView(showsSeenEntry: entry) { entryId, showIdToDelete in
-                                    self.viewModel.remove(entryId: entryId, showId: showIdToDelete)
-                                }
-                            }
-                        }
+                    AlphabeticalConcerts(entries: viewModel.entries) { entryId, showIdToDelete in
+                        viewModel.remove(entryId: entryId, showId: showIdToDelete)
                     }
                 case .byYear:
-                    ForEach(entriesByYear, id: \.year) { section in
-                        Section(section.year) {
-                            ForEach(section.shows, id: \.show.id) { item in
-                                NavigationLink {
-                                    UserSetlistView(viewModel: .init(showId: item.show.setlistFmShowId))
-                                } label: {
-                                    VStack(alignment: .leading) {
-                                        Text(item.artistName)
-                                        Text(item.show.text)
-                                            .font(.caption)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    ChronologicalConcerts(entries: viewModel.entries)
                 }
             }
             .listSectionIndexVisibility(.visible)
+            .navigationDestination(for: SetlistDestination.self) { destination in
+                UserSetlistView(viewModel: .init(showId: destination.showId))
+            }
             .onAppear {
                 self.viewModel.resetNewShowCount()
             }
@@ -109,6 +68,80 @@ struct UserShowsView<ViewModel>: View where ViewModel: UserShowsViewModelProtoco
         }
     }
 
+    struct AlphabeticalConcerts: View {
+        private let entries: [ShowSeenEntry]
+        private let onRemove: (String, String) -> Void
+
+        init(entries: [ShowSeenEntry], onRemove: @escaping (String, String) -> Void) {
+            self.entries = entries
+            self.onRemove = onRemove
+        }
+
+        var body: some View {
+            ForEach(entriesByLetter, id: \.0) { letter, shows in
+                Section(letter) {
+                    ForEach(shows, id: \.id) { entry in
+                        ShowsAttendedByArtistView(showsSeenEntry: entry, onDelete: onRemove)
+                    }
+                }
+            }
+        }
+
+        private var entriesByLetter: [(String, [ShowSeenEntry])] {
+            let grouped = Dictionary(grouping: self.entries) {
+                let first = String($0.name.prefix(1)).uppercased()
+                return first.isEmpty ? "#" : first
+            }
+            return grouped.keys.sorted().map { ($0, grouped[$0]!) }
+        }
+    }
+
+    struct ChronologicalConcerts: View {
+
+        private let entries: [ShowSeenEntry]
+        init(entries: [ShowSeenEntry]) {
+            self.entries = entries
+        }
+
+        var body: some View {
+
+            ForEach(entriesByYear, id: \.year) { section in
+                Section(section.year) {
+                    ForEach(section.shows, id: \.show.id) { item in
+                        NavigationLink(value: SetlistDestination(showId: item.show.setlistFmShowId)) {
+                            VStack(alignment: .leading) {
+                                Text(item.artistName)
+                                Text(item.show.text)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private var entriesByYear: [(year: String, shows: [(artistName: String, show: ShowSeenEntry)])] {
+            let allShows: [(artistName: String, show: ShowSeenEntry)] = self.entries.flatMap { artist in
+                (artist.children ?? []).map { (artistName: artist.name, show: $0) }
+            }
+
+            let grouped = Dictionary(grouping: allShows) { pair in
+                if let date = pair.show.date {
+                    return String(Calendar.current.component(.year, from: date))
+                }
+                return "Unknown"
+            }
+
+            return grouped.keys.sorted(by: >).map { year in
+                let yearShows = grouped[year]!.sorted {
+                    ($0.show.date ?? .distantPast) > ($1.show.date ?? .distantPast)
+                }
+                return (year: year, shows: yearShows)
+            }
+        }
+    }
+
     struct ShowsAttendedByArtistView: View {
 
         private let showsSeenEntry: ShowSeenEntry
@@ -119,13 +152,13 @@ struct UserShowsView<ViewModel>: View where ViewModel: UserShowsViewModelProtoco
         }
 
         var body: some View {
-            //            Section(showsSeenEntry.text) {
             DisclosureGroup(
                 content: {
                     ForEach(showsSeenEntry.children ?? []) { show in
-                        NavigationLink(show.text) {
-                            UserSetlistView(viewModel: .init(showId: show.setlistFmShowId))
-                        }
+                        NavigationLink(
+                            show.text,
+                            value: SetlistDestination(showId: show.setlistFmShowId)
+                        )
                     }
                     .onDelete { indexSet in
                         self.onDelete(
@@ -139,7 +172,6 @@ struct UserShowsView<ViewModel>: View where ViewModel: UserShowsViewModelProtoco
                         .badge(showsSeenEntry.children?.count ?? 0)
                 }
             )
-            //            }
         }
     }
 }

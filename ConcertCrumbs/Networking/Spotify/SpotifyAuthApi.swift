@@ -95,6 +95,7 @@ struct SpotifyMusicApi: SpotifyMusicApiInterface {
         request.httpMethod = RequestType.get.description
 
         let data = try await client.perform(request)
+        print(data.prettyPrint())
         return try JSONDecoder().decode(SpotifyTrackSearchResponse.self, from: data)
     }
 }
