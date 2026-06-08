@@ -9,6 +9,8 @@ import Foundation
 
 protocol SpotifyAuthApiInterface {
     func fetchAuthToken() async throws -> SpotifyAuthResponse
+    func exchangeAuthCode(_ code: String, codeVerifier: String, redirectUri: String) async throws -> SpotifyUserTokenResponse
+    func refreshUserToken(_ refreshToken: String) async throws -> SpotifyUserTokenResponse
 }
 
 struct SpotifyAuthApi: SpotifyAuthApiInterface {
@@ -36,6 +38,40 @@ struct SpotifyAuthApi: SpotifyAuthApiInterface {
         let (data, _) = try await session.data(for: request)
         return try JSONDecoder().decode(SpotifyAuthResponse.self, from: data)
     }
+
+    func exchangeAuthCode(_ code: String, codeVerifier: String, redirectUri: String) async throws -> SpotifyUserTokenResponse {
+        guard let url = URL(string: "\(Self.authBaseUrl)/api/token") else {
+            throw URLError(.badURL)
+        }
+
+        let body = [
+            "grant_type": "authorization_code",
+            "code": code,
+            "redirect_uri": redirectUri,
+            "client_id": Secrets.Spotify.clientId,
+            "code_verifier": codeVerifier,
+        ]
+
+        let request = constructPostRequest(from: url, formBody: body)
+        let (data, _) = try await session.data(for: request)
+        return try JSONDecoder().decode(SpotifyUserTokenResponse.self, from: data)
+    }
+
+    func refreshUserToken(_ refreshToken: String) async throws -> SpotifyUserTokenResponse {
+        guard let url = URL(string: "\(Self.authBaseUrl)/api/token") else {
+            throw URLError(.badURL)
+        }
+
+        let body = [
+            "grant_type": "refresh_token",
+            "refresh_token": refreshToken,
+            "client_id": Secrets.Spotify.clientId,
+        ]
+
+        let request = constructPostRequest(from: url, formBody: body)
+        let (data, _) = try await session.data(for: request)
+        return try JSONDecoder().decode(SpotifyUserTokenResponse.self, from: data)
+    }
 }
 
 extension SpotifyAuthApi {
@@ -62,6 +98,22 @@ struct SpotifyAuthResponse: Codable {
         case accessToken = "access_token"
         case tokenType = "token_type"
         case expiresIn = "expires_in"
+    }
+}
+
+struct SpotifyUserTokenResponse: Codable {
+    let accessToken: String
+    let tokenType: String
+    let expiresIn: Int
+    let refreshToken: String
+    let scope: String
+
+    enum CodingKeys: String, CodingKey {
+        case accessToken = "access_token"
+        case tokenType = "token_type"
+        case expiresIn = "expires_in"
+        case refreshToken = "refresh_token"
+        case scope
     }
 }
 

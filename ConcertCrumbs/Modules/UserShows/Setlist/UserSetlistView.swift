@@ -9,6 +9,7 @@ import SwiftUI
 
 struct UserSetlistView: View {
 
+    @Environment(\.openURL) private var openURL
     @State var viewModel: UserSetlistViewModel
 
     init(viewModel: UserSetlistViewModel) {
@@ -32,7 +33,7 @@ struct UserSetlistView: View {
 
             Section("Setlist") {
                 ForEach(viewModel.setlistInfo?.setlist.setSongs ?? [], id: \.self) { song in
-                    SongRow(song: song, imageUrl: viewModel.albumImages[song])
+                    SongRow(song: song, imageUrl: viewModel.spotifyTrackInfo[song]?.imageUrl)
                 }
             }
 
@@ -42,24 +43,43 @@ struct UserSetlistView: View {
                 ForEach(encores) { encore in
                     Section("Encore \(encore.number)") {
                         ForEach(encore.songs, id: \.self) { song in
-                            SongRow(song: song, imageUrl: viewModel.albumImages[song])
+                            SongRow(song: song, imageUrl: viewModel.spotifyTrackInfo[song]?.imageUrl)
                         }
                     }
                 }
             }
 
-            Section("Create Playlist") {
-                Button("Spotify") {
-                    // TODO: create Spotify playlist from fetched tracks
+            Section("Spotify") {
+                if viewModel.isCreatingPlaylist {
+                    HStack(spacing: 12) {
+                        ProgressView()
+                        Text("Creating playlist...")
+                            .foregroundStyle(.secondary)
+                    }
+                } else if let urlString = viewModel.playlistUrl, let url = URL(string: urlString) {
+                    Button("Open in Spotify") {
+                        openURL(url)
+                    }
+                } else {
+                    Button("Create Playlist") {
+                        Task { await viewModel.createPlaylist() }
+                    }
                 }
             }
         }
         .background(Color(UIColor.secondarySystemBackground))
         .navigationTitle(viewModel.setlistInfo?.artistName ?? "")
         .toolbarRole(.navigationStack)
+        .alert("Couldn't create playlist", isPresented: Binding(
+            get: { viewModel.playlistError != nil },
+            set: { if !$0 { viewModel.clearPlaylistError() } }
+        )) {
+            Button("OK", role: .cancel) { viewModel.clearPlaylistError() }
+        } message: {
+            Text(viewModel.playlistError ?? "")
+        }
     }
 }
-
 
 private struct SongRow: View {
 

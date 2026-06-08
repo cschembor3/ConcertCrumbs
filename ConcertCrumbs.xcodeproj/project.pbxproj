@@ -39,6 +39,10 @@
 		D2B3258429A3CBBA002DBCCB /* UserShowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B3258329A3CBBA002DBCCB /* UserShowsView.swift */; };
 		D2B3258729A3CC6C002DBCCB /* UserShowsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B3258629A3CC6C002DBCCB /* UserShowsViewModel.swift */; };
 		D2BDEFE2285513B9003FC4A2 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BDEFE1285513B9003FC4A2 /* Secrets.swift */; };
+		D2D29E462FD6488E0023185A /* SpotifyPKCE.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D29E452FD6488E0023185A /* SpotifyPKCE.swift */; };
+		D2D29E482FD6489B0023185A /* SpotifyUserAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D29E472FD6489B0023185A /* SpotifyUserAuthService.swift */; };
+		D2D29E4B2FD64A7F0023185A /* SpotifyPlaylistApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D29E492FD64A7F0023185A /* SpotifyPlaylistApi.swift */; };
+		D2D29E4C2FD64A7F0023185A /* SpotifyUserNetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D29E4A2FD64A7F0023185A /* SpotifyUserNetworkClient.swift */; };
 		D2F4AEDB28C534A6002A05D3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2F4AEDA28C534A6002A05D3 /* Localizable.strings */; };
 		D2F98513284EDD2E00D56104 /* ArtistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F98512284EDD2E00D56104 /* ArtistsView.swift */; };
 		D2F98515285185A000D56104 /* ArtistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F98514285185A000D56104 /* ArtistsViewModel.swift */; };
@@ -95,6 +99,11 @@
 		D2B3258329A3CBBA002DBCCB /* UserShowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserShowsView.swift; sourceTree = "<group>"; };
 		D2B3258629A3CC6C002DBCCB /* UserShowsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserShowsViewModel.swift; sourceTree = "<group>"; };
 		D2BDEFE1285513B9003FC4A2 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		D2D29E442FD6484B0023185A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D2D29E452FD6488E0023185A /* SpotifyPKCE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyPKCE.swift; sourceTree = "<group>"; };
+		D2D29E472FD6489B0023185A /* SpotifyUserAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyUserAuthService.swift; sourceTree = "<group>"; };
+		D2D29E492FD64A7F0023185A /* SpotifyPlaylistApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyPlaylistApi.swift; sourceTree = "<group>"; };
+		D2D29E4A2FD64A7F0023185A /* SpotifyUserNetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyUserNetworkClient.swift; sourceTree = "<group>"; };
 		D2F4AEDA28C534A6002A05D3 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		D2F98512284EDD2E00D56104 /* ArtistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsView.swift; sourceTree = "<group>"; };
 		D2F98514285185A000D56104 /* ArtistsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsViewModel.swift; sourceTree = "<group>"; };
@@ -180,6 +189,9 @@
 		D246CD582FBD3C8300B319D5 /* Spotify */ = {
 			isa = PBXGroup;
 			children = (
+				D2D29E492FD64A7F0023185A /* SpotifyPlaylistApi.swift */,
+				D2D29E4A2FD64A7F0023185A /* SpotifyUserNetworkClient.swift */,
+				D2D29E452FD6488E0023185A /* SpotifyPKCE.swift */,
 				D246CD562FBD3C7D00B319D5 /* SpotifyNetworkClient.swift */,
 				D246CD522FBBF33C00B319D5 /* SpotifyAuthApi.swift */,
 			);
@@ -212,6 +224,7 @@
 		D2796A072842742E007016CE /* ConcertCrumbs */ = {
 			isa = PBXGroup;
 			children = (
+				D2D29E442FD6484B0023185A /* Info.plist */,
 				D2B3257D2999BC63002DBCCB /* Data */,
 				D2796A32284274BF007016CE /* Networking */,
 				D2796A352842F3F1007016CE /* Service */,
@@ -266,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				D246CD592FBD428400B319D5 /* SpotifyAuthService.swift */,
+				D2D29E472FD6489B0023185A /* SpotifyUserAuthService.swift */,
 				D2F9851828518C0E00D56104 /* SetlistService.swift */,
 				D20D0D2C28C3B12F00C2BD25 /* UserDefaultsService.swift */,
 				D25366A32969F45500C7ED6E /* AuthenticationService.swift */,
@@ -456,6 +470,7 @@
 				D2B3257F2999BEC2002DBCCB /* UserConcertsService.swift in Sources */,
 				D20D0D2D28C3B12F00C2BD25 /* UserDefaultsService.swift in Sources */,
 				D246CD572FBD3C7D00B319D5 /* SpotifyNetworkClient.swift in Sources */,
+				D2D29E462FD6488E0023185A /* SpotifyPKCE.swift in Sources */,
 				D246CD5A2FBD428400B319D5 /* SpotifyAuthService.swift in Sources */,
 				D2BDEFE2285513B9003FC4A2 /* Secrets.swift in Sources */,
 				D2796A0B2842742E007016CE /* InitUsernameView.swift in Sources */,
@@ -470,12 +485,15 @@
 				D2F9851928518C0E00D56104 /* SetlistService.swift in Sources */,
 				D2B3258729A3CC6C002DBCCB /* UserShowsViewModel.swift in Sources */,
 				D2796A092842742E007016CE /* ConcertCrumbsApp.swift in Sources */,
+				D2D29E4B2FD64A7F0023185A /* SpotifyPlaylistApi.swift in Sources */,
+				D2D29E4C2FD64A7F0023185A /* SpotifyUserNetworkClient.swift in Sources */,
 				D25366A42969F45500C7ED6E /* AuthenticationService.swift in Sources */,
 				D2FFCA0A29C787C500FBF80D /* UserSetlistViewModel.swift in Sources */,
 				D242B569298EC16200EFA061 /* ShowsViewModel.swift in Sources */,
 				D2B3258429A3CBBA002DBCCB /* UserShowsView.swift in Sources */,
 				D246CD552FBD3A5000B319D5 /* KeychainHelper.swift in Sources */,
 				D22E1FE329947B480004E8CD /* SetlistView.swift in Sources */,
+				D2D29E482FD6489B0023185A /* SpotifyUserAuthService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,6 +662,7 @@
 				DEVELOPMENT_TEAM = YD9249X8JH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ConcertCrumbs/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -675,6 +694,7 @@
 				DEVELOPMENT_TEAM = YD9249X8JH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ConcertCrumbs/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
