@@ -28,8 +28,17 @@ struct LoginView: View {
 
                 VStack {
 
-                    Text(Constants.Login.headerText)
-                        .font(.largeTitle)
+                    Spacer()
+
+                    VStack {
+                        Image("icon")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 200)
+
+                        Text(Constants.Login.headerText)
+                            .font(.largeTitle)
+                    }
 
                     // TODO: add spacing
 
@@ -43,6 +52,9 @@ struct LoginView: View {
                     .frame(height: 80)
                     .frame(maxWidth: 400)
                     .padding(.horizontal, 50)
+
+                    Spacer()
+                    Spacer()
                 }
             }
         }
