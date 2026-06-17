@@ -18,8 +18,14 @@ struct SplashScreen: View {
             if authService.user != nil {
                 ArtistsView(viewModel: ArtistsViewModel())
             } else {
-                InitUsernameView()
+                LoginView()
+                    .environmentObject(authService)
             }
         }
     }
+}
+
+#Preview {
+    SplashScreen()
+        .environmentObject(AuthenticationService())
 }
