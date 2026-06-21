@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct UserSetlistView: View {
 
@@ -88,7 +89,7 @@ private struct SongRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            AsyncImage(url: imageUrl.flatMap(URL.init)) { image in
+            CachedAsyncImage(url: imageUrl.flatMap(URL.init)) { image in
                 image.resizable().scaledToFill()
             } placeholder: {
                 RoundedRectangle(cornerRadius: 4)
@@ -98,6 +99,92 @@ private struct SongRow: View {
             .clipShape(RoundedRectangle(cornerRadius: 4))
 
             Text(song)
+        }
+    }
+}
+
+// MARK: - Image caching
+
+/// Memory + disk caching image loader, shared across the app.
+///
+/// Decoded images are kept in an in-memory `NSCache`; the underlying
+/// `URLSession` is backed by a sized `URLCache` so raw bytes also persist to
+/// disk between launches. Concurrent requests for the same URL are coalesced.
+actor ImageCache {
+
+    static let shared = ImageCache()
+
+    private let memory = NSCache<NSURL, UIImage>()
+    private let session: URLSession
+    private var inFlight: [URL: Task<UIImage?, Never>] = [:]
+
+    init() {
+        let configuration = URLSessionConfiguration.default
+        configuration.urlCache = URLCache(
+            memoryCapacity: 10 * 1024 * 1024,
+            diskCapacity: 100 * 1024 * 1024
+        )
+        configuration.requestCachePolicy = .returnCacheDataElseLoad
+        self.session = URLSession(configuration: configuration)
+    }
+
+    func image(for url: URL) async -> UIImage? {
+        if let cached = memory.object(forKey: url as NSURL) {
+            return cached
+        }
+
+        if let existing = inFlight[url] {
+            return await existing.value
+        }
+
+        let task = Task<UIImage?, Never> {
+            defer { inFlight[url] = nil }
+            guard let (data, _) = try? await session.data(from: url),
+                  let image = UIImage(data: data) else { return nil }
+            memory.setObject(image, forKey: url as NSURL)
+            return image
+        }
+
+        inFlight[url] = task
+        return await task.value
+    }
+}
+
+/// Drop-in replacement for `AsyncImage` that resolves through `ImageCache`,
+/// avoiding re-downloads and the flicker that `AsyncImage` shows when rows are
+/// recycled in a `List`.
+struct CachedAsyncImage<Content: View, Placeholder: View>: View {
+
+    private let url: URL?
+    private let content: (Image) -> Content
+    private let placeholder: () -> Placeholder
+
+    @State private var loadedImage: UIImage?
+
+    init(
+        url: URL?,
+        @ViewBuilder content: @escaping (Image) -> Content,
+        @ViewBuilder placeholder: @escaping () -> Placeholder
+    ) {
+        self.url = url
+        self.content = content
+        self.placeholder = placeholder
+    }
+
+    var body: some View {
+        Group {
+            if let loadedImage {
+                content(Image(uiImage: loadedImage))
+            } else {
+                placeholder()
+            }
+        }
+        .task(id: url) {
+            guard let url else {
+                loadedImage = nil
+                return
+            }
+            loadedImage = await ImageCache.shared.image(for: url)
         }
     }
 }
