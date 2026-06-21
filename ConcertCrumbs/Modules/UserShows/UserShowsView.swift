@@ -161,9 +161,12 @@ struct UserShowsView<ViewModel>: View where ViewModel: UserShowsViewModelProtoco
                         )
                     }
                     .onDelete { indexSet in
+                        guard let first = indexSet.first,
+                              let children = showsSeenEntry.children,
+                              first < children.count else { return }
                         self.onDelete(
                             showsSeenEntry.id.uuidString,
-                            showsSeenEntry.children![indexSet.first!].setlistFmShowId
+                            children[first].setlistFmShowId
                         )
                     }
                 },

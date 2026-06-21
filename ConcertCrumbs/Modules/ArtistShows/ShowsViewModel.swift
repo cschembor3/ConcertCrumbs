@@ -13,6 +13,7 @@ import Observation
 final class ArtistShowsViewModel {
 
     var shows = [ShowDisplayInfo]()
+    private(set) var errorMessage: String? = nil
     private var page: Int = 1
 
     private let artist: (id: String, name: String)
@@ -26,6 +27,8 @@ final class ArtistShowsViewModel {
     }
 
     func fetch() async -> [ShowDisplayInfo] {
+        self.page = 1
+        self.errorMessage = nil
         do {
             let a = try await self.setlistApi.getArtistSetlists(id: self.artist.id, page: 1).setlist
             let shows = a.map { ShowDisplayInfo(setlistResponse: $0) }
@@ -33,17 +36,19 @@ final class ArtistShowsViewModel {
         } catch {
             print("🚨 Error at \(#function): \(error)")
             self.shows = []
+            self.errorMessage = error.localizedDescription
         }
 
         return self.shows
     }
 
     func fetchMore() async -> [ShowDisplayInfo] {
+        self.page += 1
         do {
-            self.page += 1
             let response = try await self.setlistApi.getArtistSetlists(id: self.artist.id, page: self.page)
             self.shows.append(contentsOf: response.setlist.map { ShowDisplayInfo(setlistResponse: $0) })
         } catch {
+            self.page -= 1
             print("🚨 Error at \(#function): \(error)")
         }
 

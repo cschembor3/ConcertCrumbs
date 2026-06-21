@@ -11,10 +11,8 @@ import SwiftUI
 struct LoginView: View {
 
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject private var authService: AuthenticationService
     @State private var username: String  = ""
-
-    // TODO: expose this via a VM instead of directly using it in the view
-    private let authService = AuthenticationService()
 
     var body: some View {
         NavigationStack {

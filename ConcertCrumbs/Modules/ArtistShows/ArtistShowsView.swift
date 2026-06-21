@@ -45,6 +45,17 @@ struct ArtistShowsView: View {
 
             ProgressView()
                 .opacity(self.isLoading ? 1 : 0)
+
+            if let errorMessage = viewModel.errorMessage, viewModel.shows.isEmpty {
+                ErrorRetryView(message: errorMessage) {
+                    Task {
+                        self.isLoading = true
+                        _ = await self.viewModel.fetch()
+                        self.isLoading = false
+                    }
+                }
+                .padding(.horizontal, 40)
+            }
         }
         .navigationTitle(self.viewModel.artistName)
         .task {

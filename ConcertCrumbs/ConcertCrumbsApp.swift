@@ -20,7 +20,7 @@ struct ConcertCrumbsApp: App {
         WindowGroup {
 //            ArtistsView(viewModel: ArtistsViewModel())
             SplashScreen()
-                .environmentObject(AuthenticationService())
+                .environmentObject(AuthenticationService.shared)
 //            if Auth.auth().currentUser != nil {
 //                ConcertsView(viewModel: ConcertsViewModel())
 //            } else {

@@ -22,13 +22,21 @@ struct SetlistApi: SetlistApiInterface {
 
     func searchArtists(artistName: String, page: Int = 1) async throws -> ArtistSearchResponse {
 
-        let encodedName = artistName.replacing(" ", with: "%20")
-        guard let url = URL(string: "\(SetlistApi.baseUrl)/search/artists?p=\(page)&sort=relevance&artistName=\(encodedName)") else {
+        guard var components = URLComponents(string: "\(SetlistApi.baseUrl)/search/artists") else {
+            throw URLError(.badURL)
+        }
+        components.queryItems = [
+            URLQueryItem(name: "p", value: "\(page)"),
+            URLQueryItem(name: "sort", value: "relevance"),
+            URLQueryItem(name: "artistName", value: artistName)
+        ]
+        guard let url = components.url else {
             throw URLError(.badURL)
         }
 
         let request = constructGetRequest(from: url)
         let (data, _) = try await URLSession.shared.data(for: request)
+        data.prettyPrint()
         return try JSONDecoder().decode(ArtistSearchResponse.self, from: data)
     }
 
@@ -42,6 +50,7 @@ struct SetlistApi: SetlistApiInterface {
 
         let request = constructGetRequest(from: url)
         let (data, _) = try await URLSession.shared.data(for: request)
+        data.prettyPrint()
         return try JSONDecoder().decode(ArtistSetlistResponse.self, from: data)
     }
 
@@ -58,7 +67,8 @@ struct SetlistApi: SetlistApiInterface {
 
     func getConcertsAttended(for username: String) async throws -> ArtistSetlistResponse {
 
-        guard let url = URL(string: "\(SetlistApi.baseUrl)/user/\(username)/attended?p=1") else {
+        guard let encodedUsername = username.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
+              let url = URL(string: "\(SetlistApi.baseUrl)/user/\(encodedUsername)/attended?p=1") else {
             throw URLError(.badURL)
         }
 

@@ -11,7 +11,6 @@ struct ArtistsView<ViewModel>: View where ViewModel: ArtistsViewModelProtocol {
 
     @State private var path = NavigationPath()
 
-    @State private var initialLoading: Bool = false
     @State private var loadingMore: Bool = false
 
     private let concertService = UserConcertsService.shared
@@ -29,7 +28,7 @@ struct ArtistsView<ViewModel>: View where ViewModel: ArtistsViewModelProtocol {
                 ZStack {
                     ProgressView()
                         .progressViewStyle(.circular)
-                        .opacity(self.initialLoading ? 1 : 0)
+                        .opacity(viewModel.isLoading ? 1 : 0)
 
                     List(viewModel.artists, id: \.id) { artist in
                         NavigationLink(
@@ -59,7 +58,12 @@ struct ArtistsView<ViewModel>: View where ViewModel: ArtistsViewModelProtocol {
                     }
                     .searchable(text: $viewModel.searchText)
 
-                    if self.viewModel.searchText.isEmpty {
+                    if let errorMessage = viewModel.errorMessage, viewModel.artists.isEmpty {
+                        ErrorRetryView(message: errorMessage) {
+                            Task { await viewModel.fetch(searchQuery: viewModel.searchText) }
+                        }
+                        .padding(.horizontal, 40)
+                    } else if self.viewModel.searchText.isEmpty {
                         SearchIconView()
                             .padding(.horizontal, 80)
                     }
@@ -105,6 +109,30 @@ struct SearchIconView: View {
     }
 }
 
+struct ErrorRetryView: View {
+
+    let message: String
+    let onRetry: () -> Void
+
+    var body: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "exclamationmark.triangle")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 44, height: 44)
+                .foregroundStyle(.secondary)
+
+            Text(message)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+
+            Button("Retry", action: onRetry)
+                .buttonStyle(.borderedProminent)
+        }
+    }
+}
+
 #Preview {
     ArtistsView(viewModel: MockArtistsViewModel())
 }
@@ -119,6 +147,8 @@ class MockArtistsViewModel: ArtistsViewModelProtocol {
     ]
 
     var searchText: String = ""
+    var isLoading: Bool = false
+    var errorMessage: String? = nil
     func fetch(searchQuery: String) async {}
     func fetchMore() async {}
     func needsToFetchMore(artist: ArtistSearch) -> Bool {

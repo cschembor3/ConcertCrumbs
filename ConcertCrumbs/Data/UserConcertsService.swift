@@ -33,10 +33,10 @@ final class UserConcertsService: UserConcertsServiceProtocol {
 
     private let reference = Database.database().reference()
 
-    @ObservationIgnored private lazy var databasePath: DatabaseReference? = {
-        guard let userId = AuthenticationService().user?.uid else { return nil }
-        return reference.ref.child("users/\(userId)/showsAttended")
-    }()
+    @ObservationIgnored private var databasePath: DatabaseReference? {
+        guard let userId = AuthenticationService.shared.user?.uid else { return nil }
+        return reference.child("users/\(userId)/showsAttended")
+    }
 
     private var handle: DatabaseHandle?
 
@@ -99,7 +99,7 @@ final class UserConcertsService: UserConcertsServiceProtocol {
 
     func addShowAsAttended(_ show: SetlistResponse) {
 
-        guard let user = AuthenticationService().user else { return }
+        guard let user = AuthenticationService.shared.user else { return }
 
         do {
             let userShowData = try JSONEncoder().encode(show.toUserShowDbModel())
@@ -110,9 +110,14 @@ final class UserConcertsService: UserConcertsServiceProtocol {
                 .child("users")
                 .child(user.uid)
                 .child("showsAttended")
-                .updateChildValues([show.id: userShow])
+                .updateChildValues([show.id: userShow]) { error, _ in
+                    if let error {
+                        print("Error writing attended show - \(#function): \(error)")
+                    }
+                }
         } catch {
-
+            print("Error encoding attended show - \(#function): \(error)")
+            return
         }
 
         self.reference
@@ -154,34 +159,49 @@ final class UserConcertsService: UserConcertsServiceProtocol {
                 .child("songs")
                 .setValue(songs)
         } catch {
-            fatalError("Error serializing song data - \(#function)")
+            print("Error serializing song data - \(#function): \(error)")
+            return
         }
     }
 
     func removeShowAsAttended(id: String) {
-        guard let user = AuthenticationService().user else { return }
-        self.reference
-            .ref
+        guard let user = AuthenticationService.shared.user else { return }
+
+        let database = self.reference
+
+        // Remove the show from the user's attended list.
+        database
             .child("users")
             .child(user.uid)
             .child("showsAttended")
             .child(id)
             .removeValue()
 
-        self.reference
-            .ref
-            .child("shows")
-            .child(id)
-            .child("attendedUsers")
-            .observeSingleEvent(of: .value) { snapshot in
-                if snapshot.exists() && snapshot.childrenCount == 0 {
-                    
+        let showRef = database.child("shows").child(id)
+
+        // Remove this user from the show's attendee list.
+        showRef.child("attendedUsers").child(user.uid).removeValue()
+
+        // If no attendees remain, delete the orphaned show and detach it from its artist.
+        showRef.child("attendedUsers").observeSingleEvent(of: .value) { snapshot in
+            guard !snapshot.exists() || snapshot.childrenCount == 0 else { return }
+
+            // Resolve the owning artist before deleting the show node.
+            showRef.child("artistId").observeSingleEvent(of: .value) { artistSnapshot in
+                showRef.removeValue()
+
+                guard let artistId = artistSnapshot.value as? String else { return }
+                let artistRef = database.child("artists").child(artistId)
+                artistRef.child("shows").child(id).removeValue()
+
+                // If the artist has no remaining shows, delete the artist node too.
+                artistRef.child("shows").observeSingleEvent(of: .value) { showsSnapshot in
+                    if !showsSnapshot.exists() || showsSnapshot.childrenCount == 0 {
+                        artistRef.removeValue()
+                    }
                 }
             }
-
-        // remove userid from show
-        // if show has no users attached, delete its id from artist
-        // if artist has no shows attached, delete it
+        }
     }
 }
 

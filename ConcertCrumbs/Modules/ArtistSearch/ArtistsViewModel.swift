@@ -12,6 +12,8 @@ import Observation
 @MainActor protocol ArtistsViewModelProtocol: Observable, AnyObject {
     var artists: [ArtistSearch] { get }
     var searchText: String { get set }
+    var isLoading: Bool { get }
+    var errorMessage: String? { get }
     func fetch(searchQuery: String) async
     func fetchMore() async
     func needsToFetchMore(artist: ArtistSearch) -> Bool
@@ -22,6 +24,8 @@ import Observation
 final class ArtistsViewModel: ArtistsViewModelProtocol {
 
     private(set) var artists: [ArtistSearch] = []
+    private(set) var isLoading: Bool = false
+    private(set) var errorMessage: String? = nil
     var searchText: String = "" {
         didSet { searchTextContinuation.yield(searchText) }
     }
@@ -59,26 +63,33 @@ final class ArtistsViewModel: ArtistsViewModelProtocol {
         guard !searchQuery.isEmpty else {
             self.artists = []
             self.page = 1
+            self.errorMessage = nil
             return
         }
+
+        self.page = 1
+        self.errorMessage = nil
+        self.isLoading = true
+        defer { self.isLoading = false }
 
         do {
             let response = try await setlistService.search(artistName: searchQuery, page: page)
             guard let artists = response.artist else { return }
             self.artists = artists
-            self.page = 1
         } catch {
+            self.errorMessage = error.localizedDescription
             print(error)
         }
     }
 
     func fetchMore() async {
+        self.page += 1
         do {
-            self.page += 1
             let response = try await setlistService.search(artistName: self.searchQuery, page: page)
             guard let artists = response.artist else { return }
             self.artists.append(contentsOf: artists)
         } catch {
+            self.page -= 1
             print(error)
         }
     }

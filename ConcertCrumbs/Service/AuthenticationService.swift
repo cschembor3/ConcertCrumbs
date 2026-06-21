@@ -18,6 +18,8 @@ protocol AuthenticationServiceProtocol {
 
 class AuthenticationService: NSObject, ObservableObject, AuthenticationServiceProtocol {
 
+    static let shared = AuthenticationService()
+
     @Published var user: User? = nil
 
     private var authHandler: AuthStateDidChangeListenerHandle? = nil
@@ -34,6 +36,12 @@ class AuthenticationService: NSObject, ObservableObject, AuthenticationServicePr
                 self.user = nil
             }
         })
+    }
+
+    deinit {
+        if let authHandler {
+            Auth.auth().removeStateDidChangeListener(authHandler)
+        }
     }
 
     func logIn(email: String, password: String) {
@@ -73,7 +81,8 @@ class AuthenticationService: NSObject, ObservableObject, AuthenticationServicePr
 
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
-                fatalError("Invalid state: A login callback was received, but no login request was sent.")
+                print("Invalid state: A login callback was received, but no login request was sent.")
+                return
             }
             guard let appleIDToken = appleIDCredential.identityToken else {
                 print("Unable to fetch identity token")
@@ -136,7 +145,8 @@ extension AuthenticationService: ASAuthorizationControllerDelegate {
     ) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
-                fatalError("Invalid state: A login callback was received, but no login request was sent.")
+                print("Invalid state: A login callback was received, but no login request was sent.")
+                return
             }
             guard let appleIDToken = appleIDCredential.identityToken else {
                 print("Unable to fetch identity token")
