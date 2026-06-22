@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AccountView: View {
 
-    @StateObject private var authService = AuthenticationService()
+    @EnvironmentObject private var authService: AuthenticationService
     @State private var presentSignOutAlert: Bool = false
 
     private var initials: String {

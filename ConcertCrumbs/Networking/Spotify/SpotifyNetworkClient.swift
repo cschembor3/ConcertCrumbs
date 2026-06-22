@@ -38,8 +38,11 @@ struct SpotifyNetworkClient: SpotifyNetworkClientInterface {
                 let newToken = try await authService.refreshToken()
                 let (retryData, retryResponse) = try await session.data(for: authorized(request, token: newToken))
 
-                if (retryResponse as? HTTPURLResponse)?.statusCode == 401 {
+                let retryStatus = (retryResponse as? HTTPURLResponse)?.statusCode ?? 0
+                if retryStatus == 401 {
                     throw SpotifyNetworkError.unauthorized
+                } else if !(200..<300).contains(retryStatus) {
+                    throw SpotifyNetworkError.requestFailed(statusCode: retryStatus)
                 }
 
                 return retryData
