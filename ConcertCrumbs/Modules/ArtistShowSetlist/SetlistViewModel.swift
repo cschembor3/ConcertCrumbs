@@ -40,7 +40,11 @@ final class SetlistViewModel {
             
             let title: String
             if let encore = setInfo.encore {
-                title = "Encore \(encore)"
+                if encore == 1 {
+                    title = "Encore"
+                } else {
+                    title = "Encore \(encore)"
+                }
             } else if index == 0 {
                 title = "Main Set"
             } else {

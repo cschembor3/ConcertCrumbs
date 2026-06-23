@@ -16,36 +16,18 @@ struct SetlistView: View {
     }
 
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 16) {
-                ForEach(Array(viewModel.setGroups.enumerated()), id: \.element.id) { index, setGroup in
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(setGroup.title)
-                            .font(.headline)
-                            .padding(.horizontal)
-                        
-                        ForEach(setGroup.songs) { song in
-                            HStack {
-                                Text(song.name)
-                                    .padding(.horizontal)
-                                Spacer()
-                            }
-                            .padding(.vertical, 8)
-                            .background(Color(.systemBackground))
-                            .cornerRadius(8)
-                        }
-                    }
-                    .padding(.horizontal)
-                    
-                    if index < viewModel.setGroups.count - 1 {
-                        Divider()
-                            .padding(.horizontal)
+
+        List {
+            ForEach(Array(viewModel.setGroups.enumerated()), id: \.element.id) { index, setGroup in
+                Section(setGroup.title) {
+                    ForEach(setGroup.songs) { song in
+                        Text(song.name)
                     }
                 }
             }
-            .padding(.vertical)
         }
         .navigationTitle("Setlist")
+        .listStyle(.insetGrouped)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("I was here") {
@@ -57,5 +39,32 @@ struct SetlistView: View {
 }
 
 #Preview {
-    SetlistView(viewModel: SetlistViewModel(setlist: []))
+    SetlistView(
+        viewModel: SetlistViewModel(
+            response: .init(
+                id: UUID().uuidString,
+                versionId: UUID().uuidString,
+                eventDate: Date().formatted(),
+                artist: Artist(id: UUID(), name: "Deftones"),
+                venue: Venue(
+                    id: UUID().uuidString,
+                    name: "Stone Pony",
+                    city: Location(
+                        id: UUID().uuidString,
+                        name: "Asbury Park",
+                        state: "New Jersey",
+                        stateCode: "07712",
+                        country: Country(code: "", name: "US")
+                    )
+                ),
+                tour: Tour(name: "private music"),
+                sets: Sets(
+                    set: [
+                        .init(encore: nil, song: [.init(name: "my mind is a mountain"), .init(name: "souvenir")]),
+                        .init(encore: 1, song: [Song(name: "Diamond Eyes")])]
+                ),
+                url: ""
+            )
+        )
+    )
 }
