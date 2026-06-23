@@ -119,7 +119,7 @@ struct SpotifyUserTokenResponse: Codable {
 
 // MARK: - Music API
 
-protocol SpotifyMusicApiInterface {
+protocol SpotifyMusicApiInterface: Sendable {
     func searchTracks(query: String, limit: Int) async throws -> SpotifyTrackSearchResponse
 }
 
@@ -168,7 +168,7 @@ struct SpotifyPagingObject<T: Codable>: Codable {
     let items: [T]
 }
 
-struct SpotifyTrack: Codable, Identifiable {
+nonisolated struct SpotifyTrack: Codable, Identifiable {
     let id: String
     let name: String
     let uri: String

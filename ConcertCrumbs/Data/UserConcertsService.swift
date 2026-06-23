@@ -5,7 +5,7 @@
 //  Created by Connor Schembor on 2/12/23.
 //
 
-import FirebaseDatabase
+@preconcurrency import FirebaseDatabase
 import Observation
 
 @MainActor
@@ -51,7 +51,7 @@ final class UserConcertsService: UserConcertsServiceProtocol {
     }
 
     private func loadShowsAttended() async throws -> [UserShowDbModel] {
-        guard let databasePath else { throw CocoaError(.coderReadCorrupt) }
+        guard let databasePath = databasePath else { throw CocoaError(.coderReadCorrupt) }
 
         let snapshot: DataSnapshot = try await withCheckedThrowingContinuation { continuation in
             databasePath.observeSingleEvent(

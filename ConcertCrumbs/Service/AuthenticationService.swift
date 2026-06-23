@@ -5,7 +5,7 @@
 //  Created by Connor Schembor on 1/7/23.
 //
 
-import AuthenticationServices
+@preconcurrency import AuthenticationServices
 import CryptoKit
 import Foundation
 import FirebaseAuth
