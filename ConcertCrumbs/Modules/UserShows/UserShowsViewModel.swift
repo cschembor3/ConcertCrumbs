@@ -5,7 +5,6 @@
 //  Created by Connor Schembor on 2/20/23.
 //
 
-import AsyncAlgorithms
 import Foundation
 import Observation
 
@@ -27,26 +26,22 @@ final class UserShowsViewModel: UserShowsViewModelProtocol {
         return formatter
     }()
 
-    var entries = [ShowSeenEntry]()
+    /// Derived from the service's observable `showsAttended`, so additions and
+    /// removals propagate to the UI automatically via Observation — no manual
+    /// stream consumption or per-instance listeners required.
+    var entries: [ShowSeenEntry] {
+        let artistEntries = Self.buildEntries(from: concertService.showsAttended)
+        return sortedEntries(artistEntries, by: sortOption)
+    }
 
+    private var sortOption: SortOption = .alphabetically
     private var concertService: any UserConcertsServiceProtocol
-    private var listenerTask: Task<Void, Never>?
 
     init(concertService: any UserConcertsServiceProtocol = UserConcertsService.shared) {
         self.concertService = concertService
-        self.listenerTask = Task { [weak self] in
-            await self?.populateInitialShowsAttended()
-            self?.concertService.beginListeningForNewShowsAdded()
-            guard let stream = self?.concertService.newShowsAttended else { return }
-            for await newShow in stream {
-                guard let self else { return }
-                self.handle(newShow: newShow)
-            }
+        Task { [concertService] in
+            await concertService.startObservingIfNeeded()
         }
-    }
-
-    isolated deinit {
-        listenerTask?.cancel()
     }
 
     func resetNewShowCount() {
@@ -54,45 +49,30 @@ final class UserShowsViewModel: UserShowsViewModelProtocol {
     }
 
     func sort(_ option: SortOption) {
-        self.entries = self.getSortedEntries(sortOption: option)
+        self.sortOption = option
     }
 
     func remove(entryId: String, showId: String) {
-        guard var (index, entry) = self.entries.enumerated().first(where: { $0.element.id.uuidString == entryId }),
-              let show = entry.children?.firstIndex(where: { $0.setlistFmShowId == showId }) else {
-            return
-        }
-
-        entry.children?.remove(at: show)
-        entries[index] = entry
-
         self.concertService.removeShowAsAttended(id: showId)
     }
 
-    private func populateInitialShowsAttended() async {
-        guard let showsAttended = try? await concertService.loadShowsAttended() else { return }
+    private static func buildEntries(from showsAttended: [UserShowDbModel]) -> [ShowSeenEntry] {
         let artistsDict = Dictionary(grouping: showsAttended, by: { $0.artistName })
-
-        var artistsSeen = [ArtistSeen]()
-        artistsDict.forEach { (artistName, artists) in
-            let shows = artists.map { ShowSeen(id: $0.id, venueName: $0.venueName ?? "Saint Vitus", city: "Brooklyn", date: $0.showDate) }
-            artistsSeen.append(.init(id: artistName, name: artistName, shows: shows))
-        }
-
-        self.entries = artistsSeen.map { artist in
-            .init(
+        return artistsDict.map { (artistName, shows) in
+            ShowSeenEntry(
                 setlistFmShowId: "",
-                name: artist.name,
-                text: artist.name,
+                name: artistName,
+                text: artistName,
                 type: .artist,
-                children: artist.shows.map { show in
-                    .init(
+                children: shows.map { show in
+                    let venueName = show.venueName ?? "Saint Vitus"
+                    return ShowSeenEntry(
                         setlistFmShowId: show.id,
-                        name: show.venueName,
-                        text: "\(show.date) - \(show.venueName)",
+                        name: venueName,
+                        text: "\(show.showDate) - \(venueName)",
                         type: .show,
                         children: nil,
-                        date: Self.dateFormatter.date(from: show.date)
+                        date: Self.dateFormatter.date(from: show.showDate)
                     )
                 },
                 date: nil
@@ -100,33 +80,7 @@ final class UserShowsViewModel: UserShowsViewModelProtocol {
         }
     }
 
-    private func handle(newShow: UserShowDbModel) {
-        let newShowEntry = ShowSeenEntry(
-            setlistFmShowId: newShow.id,
-            name: newShow.venueName ?? "",
-            text: newShow.showDate,
-            type: .show,
-            children: nil,
-            date: Self.dateFormatter.date(from: newShow.showDate)
-        )
-
-        if let index = self.entries.firstIndex(where: { newShow.artistName == $0.name }) {
-            self.entries[index].children?.append(newShowEntry)
-        } else {
-            self.entries.append(
-                .init(
-                    setlistFmShowId: "",
-                    name: newShow.artistName,
-                    text: newShow.artistName,
-                    type: .artist,
-                    children: [newShowEntry],
-                    date: nil
-                )
-            )
-        }
-    }
-
-    private func getSortedEntries(sortOption: SortOption) -> [ShowSeenEntry] {
+    private func sortedEntries(_ entries: [ShowSeenEntry], by sortOption: SortOption) -> [ShowSeenEntry] {
         switch sortOption {
         case .alphabetically:
             entries.sorted { artist1, artist2 in
@@ -134,8 +88,8 @@ final class UserShowsViewModel: UserShowsViewModelProtocol {
             }
         case .dateDescending:
             entries.sorted { artist1, artist2 in
-                self.getMostRecentDate(from: artist1.children ?? []) ?? Date.distantPast <
-                    self.getMostRecentDate(from: artist2.children ?? []) ?? Date.distantPast
+                (self.getMostRecentDate(from: artist1.children ?? []) ?? Date.distantPast) <
+                    (self.getMostRecentDate(from: artist2.children ?? []) ?? Date.distantPast)
             }.reversed()
         }
     }
@@ -162,19 +116,6 @@ final class UserShowsViewModel: UserShowsViewModelProtocol {
 
         return mostRecentShow?.date
     }
-}
-
-struct ArtistSeen: Hashable, Identifiable {
-    let id: String
-    let name: String
-    let shows: [ShowSeen]
-}
-
-struct ShowSeen: Hashable, Identifiable {
-    let id: String
-    let venueName: String
-    let city: String
-    let date: String
 }
 
 struct ShowSeenEntry: Identifiable, Equatable {

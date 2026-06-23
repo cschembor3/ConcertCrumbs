@@ -11,10 +11,10 @@ import Observation
 @MainActor
 protocol UserConcertsServiceProtocol {
     func getSetlist(concertId: String)
-    func loadShowsAttended() async throws -> [UserShowDbModel]
-    func beginListeningForNewShowsAdded()
+    /// Idempotently loads the user's attended shows and starts listening for
+    /// additions. Safe to call repeatedly — only the first call does work.
+    func startObservingIfNeeded() async
     func removeShowAsAttended(id: String)
-    var newShowsAttended: AsyncStream<UserShowDbModel> { get }
     var showsAttended: [UserShowDbModel] { get }
     var newShowAttendedCount: Int { get set }
 }
@@ -28,9 +28,6 @@ final class UserConcertsService: UserConcertsServiceProtocol {
     private(set) var showsAttended: [UserShowDbModel] = []
     var newShowAttendedCount: Int = 0
 
-    @ObservationIgnored let newShowsAttended: AsyncStream<UserShowDbModel>
-    private let newShowsAttendedContinuation: AsyncStream<UserShowDbModel>.Continuation
-
     private let reference = Database.database().reference()
 
     @ObservationIgnored private var databasePath: DatabaseReference? {
@@ -39,14 +36,21 @@ final class UserConcertsService: UserConcertsServiceProtocol {
     }
 
     private var handle: DatabaseHandle?
+    private var hasStarted = false
 
-    private init() {
-        let (stream, continuation) = AsyncStream.makeStream(of: UserShowDbModel.self)
-        self.newShowsAttended = stream
-        self.newShowsAttendedContinuation = continuation
+    private init() {}
+
+    func startObservingIfNeeded() async {
+        guard !hasStarted else { return }
+        hasStarted = true
+
+        // Load once so the listener's initial burst of existing children is
+        // deduped and not mistaken for newly-added shows.
+        _ = try? await loadShowsAttended()
+        beginListeningForNewShowsAdded()
     }
 
-    func loadShowsAttended() async throws -> [UserShowDbModel] {
+    private func loadShowsAttended() async throws -> [UserShowDbModel] {
         guard let databasePath else { throw CocoaError(.coderReadCorrupt) }
 
         let snapshot: DataSnapshot = try await withCheckedThrowingContinuation { continuation in
@@ -66,8 +70,8 @@ final class UserConcertsService: UserConcertsServiceProtocol {
         return shows
     }
 
-    func beginListeningForNewShowsAdded() {
-        guard let databasePath else { return }
+    private func beginListeningForNewShowsAdded() {
+        guard handle == nil, let databasePath else { return }
         self.handle = databasePath.observe(.childAdded) { [weak self] data in
             guard let json = data.value as? [String: Any] else { return }
             Task { @MainActor in
@@ -77,7 +81,6 @@ final class UserConcertsService: UserConcertsServiceProtocol {
                     let newShow = try JSONDecoder().decode(UserShowDbModel.self, from: bytes)
                     guard !self.showsAttended.contains(newShow) else { return }
                     self.showsAttended.append(newShow)
-                    self.newShowsAttendedContinuation.yield(newShow)
                     self.newShowAttendedCount += 1
                 } catch {
                     print(error)
@@ -87,7 +90,6 @@ final class UserConcertsService: UserConcertsServiceProtocol {
     }
 
     isolated deinit {
-        newShowsAttendedContinuation.finish()
         if let handle {
             databasePath?.removeObserver(withHandle: handle)
         }
@@ -166,6 +168,10 @@ final class UserConcertsService: UserConcertsServiceProtocol {
 
     func removeShowAsAttended(id: String) {
         guard let user = AuthenticationService.shared.user else { return }
+
+        // Update the local source of truth so the UI reflects the removal
+        // immediately, independent of the Firebase round-trip below.
+        self.showsAttended.removeAll { $0.id == id }
 
         let database = self.reference
 
