@@ -35,6 +35,7 @@ struct SetlistView: View {
                 } label: {
                     Image(systemName: "plus.circle.fill")
                 }
+                .tint(.green)
                 .buttonStyle(.glassProminent)
             }
         }
