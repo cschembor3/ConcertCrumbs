@@ -30,9 +30,12 @@ struct SetlistView: View {
         .listStyle(.insetGrouped)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("I was here") {
+                Button {
                     viewModel.save()
+                } label: {
+                    Image(systemName: "plus.circle.fill")
                 }
+                .buttonStyle(.glassProminent)
             }
         }
     }

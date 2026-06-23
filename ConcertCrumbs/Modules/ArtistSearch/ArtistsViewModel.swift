@@ -44,7 +44,7 @@ final class ArtistsViewModel: ArtistsViewModelProtocol {
 
         self.searchTask = Task { [weak self] in
             let queries = stream
-                .debounce(for: .milliseconds(200))
+                .debounce(for: .milliseconds(500))
                 .removeDuplicates()
             for await query in queries {
                 guard let self else { return }
