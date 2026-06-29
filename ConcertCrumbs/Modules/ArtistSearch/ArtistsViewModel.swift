@@ -27,12 +27,20 @@ final class ArtistsViewModel: ArtistsViewModelProtocol {
     private(set) var isLoading: Bool = false
     private(set) var errorMessage: String? = nil
     var searchText: String = "" {
-        didSet { searchTextContinuation.yield(searchText) }
+        didSet {
+            if searchText.isEmpty {
+                artists = []
+                page = 1
+                errorMessage = nil
+            }
+            searchTextContinuation.yield(searchText)
+        }
     }
 
     private let setlistService: SetlistServiceInterface
     private var page: Int = 1
     private var searchQuery: String = ""
+    private var canFetchMore: Bool = false
     private var searchTask: Task<Void, Never>?
     private let searchTextContinuation: AsyncStream<String>.Continuation
 
@@ -60,6 +68,8 @@ final class ArtistsViewModel: ArtistsViewModelProtocol {
     }
 
     func fetch(searchQuery: String) async {
+        print(#function)
+        canFetchMore = false
         guard !searchQuery.isEmpty else {
             self.artists = []
             self.page = 1
@@ -76,6 +86,8 @@ final class ArtistsViewModel: ArtistsViewModelProtocol {
             let response = try await setlistService.search(artistName: searchQuery, page: page)
             guard let artists = response.artist else { return }
             self.artists = artists
+            await Task.yield()
+            canFetchMore = true
         } catch {
             self.errorMessage = error.localizedDescription
             print(error)
@@ -83,6 +95,7 @@ final class ArtistsViewModel: ArtistsViewModelProtocol {
     }
 
     func fetchMore() async {
+        print(#function)
         self.page += 1
         do {
             let response = try await setlistService.search(artistName: self.searchQuery, page: page)
@@ -95,6 +108,7 @@ final class ArtistsViewModel: ArtistsViewModelProtocol {
     }
 
     func needsToFetchMore(artist: ArtistSearch) -> Bool {
+        guard canFetchMore else { return false }
         guard let indexOfCurrArtist = self.artists.firstIndex(of: artist) else { return false }
         return self.artists.count - indexOfCurrArtist < 3
     }

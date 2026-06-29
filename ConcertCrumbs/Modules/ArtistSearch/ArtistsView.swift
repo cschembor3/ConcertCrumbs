@@ -37,6 +37,7 @@ struct ArtistsView<ViewModel>: View where ViewModel: ArtistsViewModelProtocol {
                             Text(artist.name)
                         }
                         .onAppear {
+                            guard !loadingMore else { return }
                             if viewModel.needsToFetchMore(artist: artist) {
                                 self.loadingMore = true
                                 Task {

@@ -12,6 +12,7 @@ struct ArtistShowsView: View {
     @State private var loaded: Bool = false
     @State private var isLoading: Bool = false
     @State private var loadingMore: Bool = false
+    @State private var canFetchMore: Bool = false
 
     @State private var viewModel: ArtistShowsViewModel
 
@@ -29,6 +30,7 @@ struct ArtistShowsView: View {
                         .font(.monospaced(.body)())
                 }
                 .onAppear {
+                    guard canFetchMore, !loadingMore else { return }
                     if viewModel.needsToFetchMore(show: show) {
                         self.loadingMore = true
                         Task {
@@ -49,9 +51,12 @@ struct ArtistShowsView: View {
             if let errorMessage = viewModel.errorMessage, viewModel.shows.isEmpty {
                 ErrorRetryView(message: errorMessage) {
                     Task {
+                        self.canFetchMore = false
                         self.isLoading = true
                         _ = await self.viewModel.fetch()
                         self.isLoading = false
+                        await Task.yield()
+                        self.canFetchMore = true
                     }
                 }
                 .padding(.horizontal, 40)
@@ -64,6 +69,8 @@ struct ArtistShowsView: View {
             self.isLoading = true
             _ = await self.viewModel.fetch()
             self.isLoading = false
+            await Task.yield()
+            self.canFetchMore = true
         }
     }
 }
